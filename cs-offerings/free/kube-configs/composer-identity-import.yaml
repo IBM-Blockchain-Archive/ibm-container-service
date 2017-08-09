@@ -1,0 +1,61 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: composer-identity-import
+spec:
+  restartPolicy: "Never"
+  volumes:
+  - name: composer-credentials
+    hostPath:
+      path: /composer
+  - name: shared
+    hostPath:
+      path: /tmp
+  containers:
+  - name: composer-identity-import
+    image: hyperledger/composer-cli
+    imagePullPolicy: Always
+    command: ["sh", "-c", "composer identity import -p hlfv1 -u PeerAdmin -c /shared/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem -k /shared/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/key.pem"]
+    env:
+    - name: COMPOSER_CONFIG
+      value: >
+        {
+          "defaultConnectionProfile": "hlfv1",
+          "connectionProfiles": {
+            "hlfv1": {
+              "type": "hlfv1",
+              "orderers": [
+                  {
+                      "url": "grpc://blockchain-orderer:31010"
+                  }
+              ],
+              "ca": {
+                  "url": "http://blockchain-ca:7054",
+                  "name": "CA1"
+              },
+              "peers": [
+                  {
+                      "requestURL": "grpc://blockchain-org1peer1:5010",
+                      "eventURL": "grpc://blockchain-org1peer1:5011"
+                  }
+              ],
+              "keyValStore": "/home/composer/.hfc-key-store",
+              "channel": "channel1",
+              "mspID": "Org1MSP",
+              "timeout": "300"
+            }
+          },
+          "credentials": {
+            "hlfv1": {
+              "PeerAdmin": "notneeded",
+              "admin": "adminpw"
+            }
+          }
+        }
+    volumeMounts:
+    - name: composer-credentials
+      mountPath: /home
+    - name: shared
+      mountPath: /shared
+      

@@ -1,0 +1,59 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: composer-playground
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: composer-playground
+    spec:
+      volumes:
+      - name: composer-credentials
+        hostPath:
+          path: /composer
+      containers:
+      - name: composer-playground
+        image: hyperledger/composer-playground
+        imagePullPolicy: Always
+        env:
+        - name: COMPOSER_CONFIG
+          value: >
+            {
+              "defaultConnectionProfile": "hlfv1",
+              "connectionProfiles": {
+                "hlfv1": {
+                  "type": "hlfv1",
+                  "orderers": [
+                      {
+                          "url": "grpc://blockchain-orderer:31010"
+                      }
+                  ],
+                  "ca": {
+                      "url": "http://blockchain-ca:7054",
+                      "name": "CA1"
+                  },
+                  "peers": [
+                      {
+                          "requestURL": "grpc://blockchain-org1peer1:5010",
+                          "eventURL": "grpc://blockchain-org1peer1:5011"
+                      }
+                  ],
+                  "keyValStore": "/home/composer/.hfc-key-store",
+                  "channel": "channel1",
+                  "mspID": "Org1MSP",
+                  "timeout": "300"
+                }
+              },
+              "credentials": {
+                "hlfv1": {
+                  "PeerAdmin": "notneeded",
+                  "admin": "adminpw"
+                }
+              }
+            }
+        volumeMounts:
+        - name: composer-credentials
+          mountPath: /home

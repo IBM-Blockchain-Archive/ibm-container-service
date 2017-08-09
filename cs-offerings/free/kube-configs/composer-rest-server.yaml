@@ -1,0 +1,62 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: composer-rest-server
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: composer-rest-server
+    spec:
+      containers:
+      - name: composer-rest-server
+        image: hyperledger/composer-rest-server
+        imagePullPolicy: Always
+        env:
+        - name: COMPOSER_CONFIG
+          value: >
+            {
+              "defaultConnectionProfile": "hlfv1",
+              "connectionProfiles": {
+                "hlfv1": {
+                  "type": "hlfv1",
+                  "orderers": [
+                      {
+                          "url": "grpc://blockchain-orderer:31010"
+                      }
+                  ],
+                  "ca": {
+                      "url": "http://blockchain-ca:7054",
+                      "name": "CA1"
+                  },
+                  "peers": [
+                      {
+                          "requestURL": "grpc://blockchain-org1peer1:5010",
+                          "eventURL": "grpc://blockchain-org1peer1:5011"
+                      }
+                  ],
+                  "keyValStore": "/home/composer/.hfc-key-store",
+                  "channel": "channel1",
+                  "mspID": "Org1MSP",
+                  "timeout": "300"
+                }
+              },
+              "credentials": {
+                "hlfv1": {
+                  "PeerAdmin": "notneeded",
+                  "admin": "adminpw"
+                }
+              }
+            }
+        - name: COMPOSER_CONNECTION_PROFILE
+          value: hlfv1
+        - name: COMPOSER_BUSINESS_NETWORK
+          value: org-acme-biznet
+        - name: COMPOSER_ENROLLMENT_ID
+          value: admin
+        - name: COMPOSER_ENROLLMENT_SECRET
+          value: adminpw
+        - name: COMPOSER_NAMESPACES
+          value: never
