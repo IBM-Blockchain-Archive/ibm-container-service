@@ -10,7 +10,7 @@ fi
 
 echo ""
 echo "=> CREATE_ALL: Creating blockchain"
-create/create_blockchain.sh
+create/create_blockchain.sh ${1}
 
 echo ""
 echo "=> CREATE_ALL: Running Create Channel"

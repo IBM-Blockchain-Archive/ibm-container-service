@@ -9,12 +9,25 @@ else
 fi
 
 echo "Creating Services for blockchain network"
-echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml"
-kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml
+if [ "${1}" == "--with-couchdb" ]; then
+    # Use the yaml file with couchdb
+    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services.yaml"
+    kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services.yaml
+else
+    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml"
+    kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml
+fi
+
 
 echo "Creating new Deployment"
-echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain.yaml"
-kubectl create -f ${KUBECONFIG_FOLDER}/blockchain.yaml
+if [ "${1}" == "--with-couchdb" ]; then
+    # Use the yaml file with couchdb
+    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml"
+    kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml
+else
+    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain.yaml"
+    kubectl create -f ${KUBECONFIG_FOLDER}/blockchain.yaml
+fi
 
 echo "Checking if all deployments are ready"
 
