@@ -10,12 +10,24 @@ else
 fi
 
 echo "Deleting blockchain services"
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml
+if [ "$(kubectl get svc | grep couchdb | wc -l | awk '{print $1}')" != "0" ]; then
+    # Use the yaml file with couchdb
+    echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services.yaml"
+    kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services.yaml
+else
+    echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml"
+    kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml
+fi
 
 echo "Deleting blockchain deployments"
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain.yaml
+if [ "$(kubectl get pods -a | grep couchdb | wc -l | awk '{print $1}')" != "0" ]; then
+    # Use the yaml file with couchdb
+    echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml"
+    kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml
+else
+    echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain.yaml"
+    kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain.yaml
+fi
 
 echo "Checking if all deployments are deleted"
 
