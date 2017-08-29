@@ -12,7 +12,7 @@ spec:
 
   containers:
   - name: createchanneltx
-    image: ibmblockchain/fabric-tools:1.0.0
+    image: ibmblockchain/fabric-tools:1.0.1
     imagePullPolicy: Always
     command: ["sh", "-c", "cd /shared && pwd && ls && configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ${CHANNEL_NAME}.tx -channelID ${CHANNEL_NAME} && touch /shared/status_channeltx_complete "]
     env:
@@ -27,7 +27,7 @@ spec:
       name: shared
 
   - name: createchannel
-    image: ibmblockchain/fabric-peer:1.0.0
+    image: ibmblockchain/fabric-peer:1.0.1
     imagePullPolicy: Always
     command: ["sh", "-c", "while [ ! -f /shared/status_channeltx_complete ]; do echo Waiting for channeltx; sleep 2; done; peer channel create -o ${ORDERER_URL} -c ${CHANNEL_NAME} -f /shared/${CHANNEL_NAME}.tx && rm /shared/status_channeltx_complete && touch /shared/status_channelcreate_complete"]
     env:

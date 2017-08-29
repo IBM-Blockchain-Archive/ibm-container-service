@@ -12,7 +12,7 @@ spec:
 
   containers:
   - name: joinchannel
-    image: ibmblockchain/fabric-peer:1.0.0
+    image: ibmblockchain/fabric-peer:1.0.1
     imagePullPolicy: Always
     command: ["sh", "-c", "peer channel fetch newest -o ${ORDERER_URL} -c ${CHANNEL_NAME} && peer channel join -b ${CHANNEL_NAME}_newest.block "]
     env:
