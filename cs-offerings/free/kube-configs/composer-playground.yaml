@@ -22,9 +22,19 @@ spec:
         - name: COMPOSER_CONFIG
           value: >
             {
-              "defaultConnectionProfile": "hlfv1",
-              "connectionProfiles": {
-                "hlfv1": {
+              "cards": [{
+                "metadata": {
+                  "name": "PeerAdmin",
+                  "enrollmentId": "PeerAdmin",
+                  "enrollmentSecret": "NOTUSED",
+                  "roles": [
+                    "PeerAdmin",
+                    "ChannelAdmin"
+                  ]
+                },
+                "connectionProfile": {
+                  "name": "hlfv1",
+                  "description": "Hyperledger Fabric v1.0",
                   "type": "hlfv1",
                   "orderers": [
                       {
@@ -44,15 +54,10 @@ spec:
                   "keyValStore": "/home/composer/.hfc-key-store",
                   "channel": "channel1",
                   "mspID": "Org1MSP",
-                  "timeout": "300"
-                }
-              },
-              "credentials": {
-                "hlfv1": {
-                  "PeerAdmin": "notneeded",
-                  "admin": "adminpw"
-                }
-              }
+                  "timeout": 300
+                },
+                "credentials": null
+              }]
             }
         volumeMounts:
         - name: composer-credentials
