@@ -5,16 +5,21 @@ metadata:
   name: wipeshared
 spec:
   restartPolicy: "Never"
-  volumes: 
+  volumes:
+  - name: composer-credentials
+    hostPath:
+      path: /composer
   - name: shared
     hostPath:
       path: /tmp
-        
+
   containers:
   - name: wipeshared
     image: ibmblockchain/fabric-tools:1.0.1
     imagePullPolicy: Always
-    command: ["sh", "-c", "rm -rf /shared/*"]
+    command: ["sh", "-c", "rm -rf /shared/* /home/*"]
     volumeMounts:
+    - name: composer-credentials
+      mountPath: /home
     - mountPath: /shared
       name: shared
