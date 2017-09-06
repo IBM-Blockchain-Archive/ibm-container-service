@@ -47,14 +47,13 @@ The following tables lists the configurable parameters of the IBM Blockchain cha
 | `blockchain.pullPolicy`            | Blockchain image pull policy             | `Always`                                                 |
 | `blockchain.channelName`           | Blockchain channel name                  | `channel1`                                               |
 
+The above parameters map to the env variables defined in [IBM-Blockchain/ibm-container-service](https://github.ibm.com/IBM-Blockchain/ibm-container-service). For more information please refer to the [IBM-Blockchain/ibm-container-service](https://github.ibm.com/IBM-Blockchain/ibm-container-service) documentation.
 
-The above parameters map to the env variables defined in [IBM-Blockch-ain/ibm-container-service](https://github.ibm.com/IBM-Blockchain/ibm-container-service). For more information please refer to the [IBM-Blockchain/ibm-container-service](https://github.ibm.com/IBM-Blockchain/ibm-container-service) documentation.
--
-Specify each parameter using the `--set key=value[,key=value]` argume-nt to `helm install`.
--
-Alternatively, a YAML file that specifies the values for the above pa-rameters can be provided while installing the chart. For example,
--
-```console-
+Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
+
+Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
+
+```console
 $ helm install --name my-release -f values.yaml stable/ibm-blockchain-channel
 ```
 
