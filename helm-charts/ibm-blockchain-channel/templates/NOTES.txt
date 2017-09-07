@@ -17,3 +17,11 @@
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl port-forward $POD_NAME 8080:{{ .Values.service.externalPort }}
 {{- end }}
+
+2. Next, install and instantiate chaincode by running these commands:
+  helm install stable/ibm-blockchain-chaincode
+
+3. If pods complete with an error state, ensure you have first created an IBM Blockchain Network by running these commands:
+  helm delete {{ .Release.Name }}
+  helm install stable/ibm-blockchain-network
+  helm install stable/ibm-blockchain-channel
