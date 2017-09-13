@@ -239,6 +239,8 @@ spec:
           value: blockchain-orderer:31010
         - name: GODEBUG
           value: "netdns=go"
+        - name: CORE_VM_DOCKER_ATTACHSTDOUT
+          value: "true"
         volumeMounts:
         - mountPath: /shared
           name: shared
@@ -329,6 +331,8 @@ spec:
           value: blockchain-orderer:31010
         - name: GODEBUG
           value: "netdns=go"
+        - name: CORE_VM_DOCKER_ATTACHSTDOUT
+          value: "true"
         volumeMounts:
         - mountPath: /shared
           name: shared
