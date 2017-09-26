@@ -9,6 +9,10 @@ else
 fi
 
 echo ""
+echo "=> CREATE_ALL: Creating storage"
+create/create_storage.sh
+
+echo ""
 echo "=> CREATE_ALL: Creating blockchain"
 create/create_blockchain.sh ${1}
 
