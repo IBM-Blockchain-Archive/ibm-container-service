@@ -8,8 +8,7 @@ spec:
   volumes:
   - name: shared
     persistentVolumeClaim:
-      claimName: task-pv-claim
-
+      claimName: shared-pvc
   - name: dockersocket
     hostPath:
       path: /var/run/docker.sock
