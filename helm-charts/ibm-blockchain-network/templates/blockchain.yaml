@@ -17,14 +17,14 @@ spec:
       path: /composer
   containers:
   - name: cryptogen
-    image: ibmblockchain/fabric-tools:1.0.0
+    image: ibmblockchain/fabric-tools:1.0.1
     imagePullPolicy: {{.Values.blockchain.pullPolicy}}
     command: ["sh", "-c", "cryptogen generate --config /sampleconfig/crypto-config.yaml && cp -r crypto-config /shared/ && for file in $(find /shared/ -iname *_sk); do dir=$(dirname $file); mv ${dir}/*_sk ${dir}/key.pem; done && find /shared -type d | xargs chmod a+rx && find /shared -type f | xargs chmod a+r && touch /shared/status_cryptogen_complete"]
     volumeMounts:
     - mountPath: /shared
       name: shared
   - name: configtxgen
-    image: ibmblockchain/fabric-tools:1.0.0
+    image: ibmblockchain/fabric-tools:1.0.1
     imagePullPolicy: {{.Values.blockchain.pullPolicy}}
     command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_cryptogen_complete ]; do echo Waiting for cryptogen; sleep 1; done; echo 'sample config is =>' && ls /sampleconfig && cp /sampleconfig/configtx.yaml /shared/configtx.yaml; echo 'shared after copy is =>' && ls /shared && cd /shared/; configtxgen -profile TwoOrgsOrdererGenesis -outputBlock orderer.block && find /shared -type d | xargs chmod a+rx && find /shared -type f | xargs chmod a+r && touch /shared/status_configtxgen_complete && rm /shared/status_cryptogen_complete"]
     env:
@@ -46,7 +46,7 @@ spec:
     - mountPath: /shared
       name: shared
   - name: bootstrap
-    image: ibmblockchain/fabric-tools:1.0.0
+    image: ibmblockchain/fabric-tools:1.0.1
     imagePullPolicy: {{.Values.blockchain.pullPolicy}}
     command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; cp -r /sampleconfig/cas /shared; touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer && chown 100 /home/composer && echo 'Done with bootstrapping'" ]
     volumeMounts:
@@ -73,7 +73,7 @@ spec:
 
       containers:
       - name: orderer
-        image: ibmblockchain/fabric-orderer:1.0.0
+        image: ibmblockchain/fabric-orderer:1.0.1
         command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; touch /shared/status_orderer_complete && orderer"]
         env:
         - name: ORDERER_CFG_PATH
@@ -133,7 +133,7 @@ spec:
 
       containers:
       - name: ca
-        image: ibmblockchain/fabric-ca:1.0.0
+        image: ibmblockchain/fabric-ca:1.0.1
         command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; touch /shared/status_fabricca_complete && fabric-ca-server start -c ${CONFIGYAML}"]
         env:
         - name: CONFIGYAML
@@ -178,7 +178,7 @@ spec:
 
       containers:
       - name: org1peer1
-        image: ibmblockchain/fabric-peer:1.0.0
+        image: ibmblockchain/fabric-peer:1.0.1
         command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; touch /shared/status_org1peer1_complete && peer node start --peer-defaultchain=false"]
         env:
         - name: CORE_PEER_ADDRESSAUTODETECT
@@ -266,7 +266,7 @@ spec:
 
       containers:
       - name: org2peer1
-        image: ibmblockchain/fabric-peer:1.0.0
+        image: ibmblockchain/fabric-peer:1.0.1
         command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; touch /shared/status_org2peer1_complete && peer node start --peer-defaultchain=false"]
         env:
         - name: CORE_PEER_ADDRESSAUTODETECT
