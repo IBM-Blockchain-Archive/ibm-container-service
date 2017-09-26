@@ -13,8 +13,8 @@ spec:
     hostPath:
       path: /var/run/docker.sock
   - name: composer-credentials
-    hostPath:
-      path: /composer
+    persistentVolumeClaim:
+      claimName: composer-pvc
   containers:
   - name: cryptogen
     image: ibmblockchain/fabric-tools:1.0.1

@@ -8,10 +8,10 @@ spec:
   volumes:
   - name: shared
     persistentVolumeClaim:
-     claimName: shared
+      claimName: shared
   - name: composer-credentials
-    hostPath:
-      path: /composer
+    persistentVolumeClaim:
+      claimName: composer-pvc
   containers:
   - name: composer-identity-import
     image: hyperledger/composer-cli

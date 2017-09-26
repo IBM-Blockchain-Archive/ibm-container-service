@@ -7,8 +7,8 @@ spec:
   restartPolicy: "Never"
   volumes:
   - name: composer-credentials
-    hostPath:
-      path: /composer
+    persistentVolumeClaim:
+      claimName: composer-pvc
   - name: shared
     persistentVolumeClaim:
       claimName: shared-pvc

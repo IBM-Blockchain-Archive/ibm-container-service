@@ -12,11 +12,39 @@ spec:
     - ReadWriteMany
   hostPath:
     path: "/tmp"
+
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: composer-pv
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/composer"
+
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: shared-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: composer-pvc
 spec:
   accessModes:
     - ReadWriteMany
