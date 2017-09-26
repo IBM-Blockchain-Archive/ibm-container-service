@@ -7,8 +7,9 @@ spec:
   restartPolicy: "Never"
   volumes:
   - name: shared
-    hostPath:
-      path: /tmp
+    persistentVolumeClaim:
+      claimName: task-pv-claim
+
   - name: dockersocket
     hostPath:
       path: /var/run/docker.sock

@@ -10,8 +10,8 @@ spec:
     hostPath:
       path: /composer
   - name: shared
-    hostPath:
-      path: /tmp
+    persistentVolumeClaim:
+      claimName: shared-pvc
 
   containers:
   - name: wipeshared
