@@ -5,6 +5,7 @@ metadata:
   name: shared-pv
   labels:
     type: local
+    name: shared
 spec:
   capacity:
     storage: 1Gi
@@ -20,6 +21,7 @@ metadata:
   name: composer-pv
   labels:
     type: local
+    name: composer
 spec:
   capacity:
     storage: 1Gi
@@ -39,7 +41,9 @@ spec:
   resources:
     requests:
       storage: 1Gi
-
+  selector:
+    matchLabels:
+      name: shared
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1
@@ -51,3 +55,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  selector:
+    matchLabels:
+      name: composer
