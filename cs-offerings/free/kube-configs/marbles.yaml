@@ -12,8 +12,8 @@ spec:
     spec:
       volumes:
       - name: shared
-        hostPath:
-          path: /tmp
+        persistentVolumeClaim:
+          claimName: shared-pvc
       containers:
       - name: marbles-demo
         image: dhyeyibm/container-service-marbles

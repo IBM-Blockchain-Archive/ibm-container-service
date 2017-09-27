@@ -7,11 +7,11 @@ spec:
   restartPolicy: "Never"
   volumes:
   - name: composer-credentials
-    hostPath:
-      path: /composer
+    persistentVolumeClaim:
+      claimName: composer-pvc
   - name: shared
-    hostPath:
-      path: /tmp
+    persistentVolumeClaim:
+      claimName: shared-pvc
 
   containers:
   - name: wipeshared

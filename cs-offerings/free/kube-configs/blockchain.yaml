@@ -7,14 +7,14 @@ spec:
   restartPolicy: "Never"
   volumes:
   - name: shared
-    hostPath:
-      path: /tmp
+    persistentVolumeClaim:
+      claimName: shared-pvc
   - name: dockersocket
     hostPath:
       path: /var/run/docker.sock
   - name: composer-credentials
-    hostPath:
-      path: /composer
+    persistentVolumeClaim:
+      claimName: composer-pvc
   containers:
   - name: cryptogen
     image: ibmblockchain/fabric-tools:1.0.1
@@ -68,8 +68,8 @@ spec:
     spec:
       volumes:
       - name: shared
-        hostPath:
-          path: /tmp
+        persistentVolumeClaim:
+          claimName: shared-pvc
 
       containers:
       - name: orderer
@@ -128,8 +128,8 @@ spec:
     spec:
       volumes:
       - name: shared
-        hostPath:
-          path: /tmp
+        persistentVolumeClaim:
+          claimName: shared-pvc
 
       containers:
       - name: ca
@@ -170,8 +170,8 @@ spec:
     spec:
       volumes:
       - name: shared
-        hostPath:
-          path: /tmp
+        persistentVolumeClaim:
+          claimName: shared-pvc
       - name: dockersocket
         hostPath:
           path: /var/run/docker.sock
@@ -260,8 +260,8 @@ spec:
     spec:
       volumes:
       - name: shared
-        hostPath:
-          path: /tmp
+        persistentVolumeClaim:
+          claimName: shared-pvc
       - name: dockersocket
         hostPath:
           path: /var/run/docker.sock

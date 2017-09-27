@@ -15,8 +15,8 @@ spec:
         persistentVolumeClaim:
          claimName: shared
       - name: composer-credentials
-        hostPath:
-          path: /composer
+        persistentVolumeClaim:
+          claimName: composer-pvc
       containers:
       - name: composer-playground
         image: hyperledger/composer-playground
