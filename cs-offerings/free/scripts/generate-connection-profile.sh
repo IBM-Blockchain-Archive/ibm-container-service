@@ -1,12 +1,5 @@
 #!/bin/bash
 
-#admin cert:
-#	private:
-#	/shared/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/key.pem 
-
-#	public:
-#	/shared/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem 
-
 ORG=""
 CLUSTER_NAME=""
 
@@ -57,12 +50,12 @@ fi
 PUBLIC_ADDRESS=$(bx cs workers ${CLUSTER_NAME} | tail -1 | awk '{print $2}')
 echo "Public address for cluster is: ${PUBLIC_ADDRESS}"
 PEER_CONTAINER_NAME=$(kubectl get pods -a | grep ${PEER} | awk '{print $1}')
-echo "Container for org1peer1 is ${PEER_CONTAINER_NAME}"
-ADMIN_PRIVATE_KEY=$(kubectl exec ${PEER_CONTAINER_NAME} cat /shared/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/key.pem)
-ADMIN_PUBLIC_KEY=$(kubectl exec ${PEER_CONTAINER_NAME} cat /shared/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem )
+echo "Container for ${ORG}peer1 is ${PEER_CONTAINER_NAME}"
+ADMIN_PRIVATE_KEY=$(kubectl exec ${PEER_CONTAINER_NAME} cat /shared/crypto-config/peerOrganizations/${ORG}.example.com/users/Admin@${ORG}.example.com/msp/keystore/key.pem)
+ADMIN_PUBLIC_KEY=$(kubectl exec ${PEER_CONTAINER_NAME} cat /shared/crypto-config/peerOrganizations/${ORG}.example.com/users/Admin@${ORG}.example.com/msp/signcerts/Admin@${ORG}.example.com-cert.pem )
 
-# echo "admin private key is ${ADMIN_PRIVATE_KEY}"
-# echo "admin public key is ${ADMIN_PUBLIC_KEY}"
+echo "admin private key is ${ADMIN_PRIVATE_KEY}"
+echo "admin public key is ${ADMIN_PUBLIC_KEY}"
 
 ADMIN_PRIVATE_KEY_ONELINE=$(echo "${ADMIN_PRIVATE_KEY//$'\n'/\\\r\\\n}\\\r\\\n")
 ADMIN_PUBLIC_KEY_ONELINE=$(echo "${ADMIN_PUBLIC_KEY//$'\n'/\\\r\\\n}\\\r\\\n")
@@ -70,18 +63,18 @@ ADMIN_PUBLIC_KEY_ONELINE=$(echo "${ADMIN_PUBLIC_KEY//$'\n'/\\\r\\\n}\\\r\\\n")
 # echo "admin private key one line is ${ADMIN_PRIVATE_KEY_ONELINE}"
 # echo "admin public key one line is ${ADMIN_PUBLIC_KEY_ONELINE}"
 
-if [ "${ORG}" == "org1" ];then
-	echo "Setting the json for org1"
-	cp connection-profile-org1.json.tmpl connection-profile-org1.json
+if [ "${ORG}" == "org1" ] || [ "${ORG}" == "org2" ];then
+	echo "Setting the json for ${ORG}"
+	cp connection-profile-${ORG}.json.tmpl connection-profile-${ORG}.json
 
 	OLD_STRING="ADMINPRIVATEKEY"
-	sed -i "" "s|${OLD_STRING}|${ADMIN_PRIVATE_KEY_ONELINE}|g" connection-profile-org1.json
+	sed -i "" "s|${OLD_STRING}|${ADMIN_PRIVATE_KEY_ONELINE}|g" connection-profile-${ORG}.json
 	
 	OLD_STRING="ADMINPUBLICKEY"
-	sed -i "" "s|${OLD_STRING}|${ADMIN_PUBLIC_KEY_ONELINE}|g" connection-profile-org1.json
+	sed -i "" "s|${OLD_STRING}|${ADMIN_PUBLIC_KEY_ONELINE}|g" connection-profile-${ORG}.json
 	
 	OLD_STRING="PUBLICIP"
-	sed -i "" "s|${OLD_STRING}|${PUBLIC_ADDRESS}|g" connection-profile-org1.json
+	sed -i "" "s|${OLD_STRING}|${PUBLIC_ADDRESS}|g" connection-profile-${ORG}.json
 
-	echo "Check the profile: connection-profile-org1.json"
+	echo "Check the profile: connection-profile-${ORG}.json"
 fi
