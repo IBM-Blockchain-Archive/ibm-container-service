@@ -62,8 +62,8 @@ else
 		echo "Creating Persistant Volume"
 		
 		# making a pv on kubernetes
-		echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/storage.yaml"
-		kubectl create -f ${KUBECONFIG_FOLDER}/storage.yaml
+		echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/storage-free.yaml"
+		kubectl create -f ${KUBECONFIG_FOLDER}/storage-free.yaml
 		sleep 5
 		if [ "kubectl get pvc | grep shared-pvc | awk '{print $3}'" != "shared-pv" ]; then
 			echo "Success creating PV"
