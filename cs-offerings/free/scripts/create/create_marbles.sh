@@ -7,6 +7,9 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
+WITH_COUCHDB=false
+PAID=false
+
 Parse_Arguments() {
 	while [ $# -gt 0 ]; do
 		case $1 in
