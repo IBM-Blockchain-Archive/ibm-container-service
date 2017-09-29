@@ -40,10 +40,10 @@ echo "Deleting blockchain services"
 if [ "$(kubectl get svc | grep couchdb | wc -l | awk '{print $1}')" != "0" ]; then
     # Use the yaml file with couchdb
     echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services-${OFFERING}.yaml"
-    kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services.yaml
+    kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services-${OFFERING}.yaml
 else
     echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-services-${OFFERING}.yaml"
-    kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml
+    kubectl delete -f ${KUBECONFIG_FOLDER}/blockchain-services-${OFFERING}.yaml
 fi
 
 echo "Deleting blockchain deployments"

@@ -39,5 +39,5 @@ if [ "${DELETE_VOLUMES}" == "true" ]; then
 	echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/storage-${OFFERING}.yaml"
 	kubectl delete -f ${KUBECONFIG_FOLDER}/storage-${OFFERING}.yaml
 else
-	"-i | --include-volumes not included in the command, will not delete storage/volumes."
+	echo "-i | --include-volumes not included in the command, will not delete storage/volumes."
 fi
