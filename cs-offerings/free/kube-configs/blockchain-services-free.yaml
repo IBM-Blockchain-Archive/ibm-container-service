@@ -11,8 +11,9 @@ spec:
     name: ca
   ports:
   - protocol: TCP
-    port: 7054
     nodePort: 30000
+    targetPort: 7054
+    port: 30000
     name: grpc
 ---
 apiVersion: v1
@@ -27,8 +28,9 @@ spec:
     name: orderer
   ports:
   - protocol: TCP
-    port: 31010
     nodePort: 31010
+    targetPort: 31010
+    port: 31010
     name: grpc
 ---
 apiVersion: v1
@@ -43,12 +45,14 @@ spec:
     name: org1peer1
   ports:
   - protocol: TCP
-    port: 5010
     nodePort: 30110
+    targetPort: 5010
+    port: 30110
     name: grpc
   - protocol: TCP
-    port: 5011
     nodePort: 30111
+    targetPort: 5011
+    port: 30111
     name: events
 ---
 apiVersion: v1
@@ -63,10 +67,12 @@ spec:
     name: org2peer1
   ports:
   - protocol: TCP
-    port: 5010
     nodePort: 30210
+    targetPort: 5010
+    port: 30210
     name: grpc
   - protocol: TCP
-    port: 5011
     nodePort: 30211
+    targetPort: 5011
+    port: 30211
     name: events

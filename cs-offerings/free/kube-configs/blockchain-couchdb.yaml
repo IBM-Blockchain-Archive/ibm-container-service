@@ -31,11 +31,11 @@ spec:
      - name: PEERHOST1
        value: blockchain-org1peer1
      - name: PEERPORT1
-       value: "5010"
+       value: "30110"
      - name: PEERHOST2
        value: blockchain-org2peer1
      - name: PEERPORT2
-       value: "5010"
+       value: "30210"
      - name: ORDERER_URL
        value: blockchain-orderer:31010
      - name: FABRIC_CFG_PATH
@@ -186,7 +186,7 @@ spec:
         - name: CORE_PEER_NETWORKID
           value: nid1
         - name: CORE_PEER_ADDRESS
-          value: blockchain-org1peer1:5010
+          value: blockchain-org1peer1:30110
         - name: CORE_PEER_LISTENADDRESS
           value: 0.0.0.0:5010
         - name: CORE_PEER_EVENTS_ADDRESS
@@ -233,7 +233,7 @@ spec:
           # value: goleveldb
           value: CouchDB
         - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-          value: blockchain-couchdb1:5984
+          value: blockchain-couchdb1:30984
         - name: PEER_CFG_PATH
           value: peer_config/
         - name: FABRIC_CFG_PATH
@@ -277,7 +277,7 @@ spec:
         - name: CORE_PEER_NETWORKID
           value: nid1
         - name: CORE_PEER_ADDRESS
-          value: blockchain-org2peer1:5010
+          value: blockchain-org2peer1:30210
         - name: CORE_PEER_LISTENADDRESS
           value: 0.0.0.0:5010
         - name: CORE_PEER_EVENTS_ADDRESS
@@ -326,7 +326,7 @@ spec:
           # value: goleveldb
           value: CouchDB
         - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-          value: blockchain-couchdb2:5984
+          value: blockchain-couchdb2:31984
         - name: PEER_CFG_PATH
           value: peer_config/
         - name: FABRIC_CFG_PATH

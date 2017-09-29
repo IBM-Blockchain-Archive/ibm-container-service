@@ -62,9 +62,19 @@ NUMPENDING=$(kubectl get deployments | grep blockchain | awk '{print $5}' | grep
 while [ "${NUMPENDING}" != "0" ]; do
     echo "Waiting on pending deployments. Deployments pending = ${NUMPENDING}"
     NUMPENDING=$(kubectl get deployments | grep blockchain | awk '{print $5}' | grep 0 | wc -l | awk '{print $1}')
+    sleep 1
 done
 
-if [ "${1}" == "--with-couchdb" ]; then
-    echo "Waiting for 15 seconds for peers to settle, as we are running with couchdb"
-    sleep 15
-fi
+UTILSSTATUS=$(kubectl get pods -a utils | grep utils | awk '{print $3}')
+while [ "${UTILSSTATUS}" != "Completed" ]; do
+    echo "Waiting for Utils pod to complete. Status = ${UTILSSTATUS}"
+    if [ "${UTILSSTATUS}" == "Error" ]; then
+        echo "There is an error in utils pod. Please run 'kubectl logs utils' or 'kubectl describe pod utils'."
+        exit 1
+    fi
+    sleep 1
+    UTILSSTATUS=$(kubectl get pods -a utils | grep utils | awk '{print $3}')
+done
+
+echo "Waiting for 15 seconds for peers and orderer to settle"
+sleep 15
