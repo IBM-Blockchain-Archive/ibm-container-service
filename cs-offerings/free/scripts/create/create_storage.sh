@@ -10,9 +10,9 @@ fi
 
 echo "Creating Persistent Volumes"
 if [ "${1}" == "--paid" ]; then
-	if [ "$(kubectl get pvc | grep shared-pvc | awk '{ print $2 }')" != "Bound" ]; then
+	if [ "$(kubectl get pvc | grep shared-pvc | awk '{ print $2 }')" != "Bound" ] || [ "$(kubectl get pvc | grep composer-pvc | awk '{ print $2 }')" != "Bound" ]; then
 		echo "The paid PVC does not seem to exist"
-		echo "Creating PVC named shared-pvc"
+		echo "Creating PVC named shared-pvc and composer-pvc"
 
 		# making a PVC on ibm-cs paid version
 		echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/storage-paid.yaml"
@@ -21,11 +21,17 @@ if [ "${1}" == "--paid" ]; then
 
 		while [ "$(kubectl get pvc | grep shared-pvc | awk '{print $2 }')" != "Bound" ];
 		do
-			echo "Waiting for storage to be created"
+			echo "Waiting for shared-pvc to be bound"
+			sleep 5
+		done
+
+		while [ "$(kubectl get pvc | grep composer-pvc | awk '{print $2 }')" != "Bound" ];
+		do
+			echo "Waiting for composer-pvc to be bound"
 			sleep 5
 		done
 	else
-		echo "The PVC with name shared-pvc exists, not creating again"
+		echo "The PVC with name shared-pvc or composer-pvc exists, not creating again"
 		#echo "Note: This can be a normal storage and not a ibm-cs storage, please check for more details"
 	fi
 else
