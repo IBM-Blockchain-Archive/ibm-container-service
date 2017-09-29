@@ -8,41 +8,13 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
-WITH_COUCHDB=false
-PAID=false
-
-Parse_Arguments() {
-	while [ $# -gt 0 ]; do
-		case $1 in
-			--with-couchdb)
-				echo "Configured to setup network with couchdb"
-				WITH_COUCHDB=true
-				;;
-			--paid)
-				echo "Configured to setup a paid storage on ibm-cs"
-				PAID=true
-		esac
-		shift
-	done
-}
-
-Parse_Arguments $@
-
 echo ""
 echo "=> CREATE_ALL: Creating storage"
-if [ "$PAID" == "true" ]; then
-	create/create_storage.sh --paid
-else
-	create/create_storage.sh 
-fi
+create/create_storage.sh $@
 
 echo ""
 echo "=> CREATE_ALL: Creating blockchain"
-if [ "$WITH_COUCHDB" == "true" ]; then
-	create/create_blockchain.sh --with-couchdb
-else
-	create/create_blockchain.sh
-fi
+create/create_blockchain.sh $@
 
 echo ""
 echo "=> CREATE_ALL: Running Create Channel"
@@ -57,12 +29,12 @@ CHANNEL_NAME="channel1" PEER_MSPID="Org2MSP" PEER_ADDRESS="blockchain-org2peer1:
 
 echo ""
 echo "=> CREATE_ALL: Creating composer playground"
-create/create_composer-playground.sh
+create/create_composer-playground.sh $@
 
 # Can't create this until the user has performed manual actions in the Composer Playground.
 # echo ""
 # echo "=> CREATE_ALL: Creating composer rest server"
-# create/create_composer-rest-server.sh
+# create/create_composer-rest-server.sh $@
 
 echo ""
 echo "=> CREATE_ALL: Running Install Chaincode on Org1 Peer1"
