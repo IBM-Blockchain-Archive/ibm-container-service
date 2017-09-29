@@ -10,7 +10,7 @@ fi
 
 echo "Creating Persistent Volumes"
 if [ "${1}" == "--paid" ]; then
-	if [ "$(kubectl get pvc | grep shared-pvc | wc -l | awk '{ print $1 }')" == "0" ]; then
+	if [ "$(kubectl get pvc | grep shared-pvc | awk '{ print $2 }')" == "Bound" ]; then
 		echo "The paid PVC does not seem to exist"
 		echo "Creating PVC named shared-pvc"
 
@@ -19,7 +19,7 @@ if [ "${1}" == "--paid" ]; then
 		kubectl create -f ${KUBECONFIG_FOLDER}/storage-paid.yaml
 		sleep 5
 
-		while [ "$(kubectl get pvc | grep shared-pvc | wc -l | awk '{ print $1 }')" == "0" ];
+		while [ "$(kubectl get pvc | grep shared-pvc | awk '{print $2 }')" == "Bound" ];
 		do
 			echo "Waiting for storage to be created"
 			sleep 5
