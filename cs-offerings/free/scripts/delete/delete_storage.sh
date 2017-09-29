@@ -9,7 +9,6 @@ else
 fi
 
 DELETE_VOLUMES=false
-WITH_COUCHDB=false
 PAID=false
 
 Parse_Arguments() {

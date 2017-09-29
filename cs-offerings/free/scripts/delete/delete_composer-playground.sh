@@ -8,16 +8,11 @@ else
     echo "Please run the script from 'scripts' or 'scripts/delete' folder"
 fi
 
-WITH_COUCHDB=false
 PAID=false
 
 Parse_Arguments() {
 	while [ $# -gt 0 ]; do
 		case $1 in
-			--with-couchdb)
-				echo "Configured to setup network with couchdb"
-				WITH_COUCHDB=true
-				;;
 			--paid)
 				echo "Configured to setup a paid storage on ibm-cs"
 				PAID=true
