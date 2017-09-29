@@ -9,7 +9,7 @@ else
 fi
 
 WITH_COUCHDB=false
-PAID_STORAGE=false
+PAID=false
 
 Parse_Arguments() {
 	while [ $# -gt 0 ]; do
@@ -18,9 +18,9 @@ Parse_Arguments() {
 				echo "Configured to setup network with couchdb"
 				WITH_COUCHDB=true
 				;;
-			--paid-storage)
+			--paid)
 				echo "Configured to setup a paid storage on ibm-cs"
-				PAID_STORAGE=true
+				PAID=true
 		esac
 		shift
 	done
@@ -30,7 +30,7 @@ Parse_Arguments $@
 
 echo ""
 echo "=> CREATE_ALL: Creating storage"
-if [ "$PAID_STORAGE" == "true" ]; then
+if [ "$PAID" == "true" ]; then
 	create/create_storage.sh --paid
 else
 	create/create_storage.sh 
