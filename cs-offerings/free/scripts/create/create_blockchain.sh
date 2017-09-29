@@ -67,13 +67,26 @@ done
 
 UTILSSTATUS=$(kubectl get pods -a utils | grep utils | awk '{print $3}')
 while [ "${UTILSSTATUS}" != "Completed" ]; do
-    echo "Waiting for Utils pod to complete. Status = ${UTILSSTATUS}"
+    echo "Waiting for Utils pod to start completion. Status = ${UTILSSTATUS}"
+    if [ "${UTILSSTATUS}" == "Error" ]; then
+        echo "There is an error in utils pod. Please run 'kubectl logs utils' or 'kubectl describe pod utils'."
+        exit 1
+    fi
+    UTILSSTATUS=$(kubectl get pods -a utils | grep utils | awk '{print $3}')
+done
+
+
+UTILSCOUNT=$(kubectl get pods -a utils | grep "0/3" | grep "Completed" | wc -l | awk '{print $1}')
+while [ "${UTILSCOUNT}" != "1" ]; do
+    UTILSLEFT=$(kubectl get pods -a utils | grep utils | awk '{print $2}')
+    echo "Waiting for all containers in Utils pod to complete. Left = ${UTILSLEFT}"
+    UTILSSTATUS=$(kubectl get pods -a utils | grep utils | awk '{print $3}')
     if [ "${UTILSSTATUS}" == "Error" ]; then
         echo "There is an error in utils pod. Please run 'kubectl logs utils' or 'kubectl describe pod utils'."
         exit 1
     fi
     sleep 1
-    UTILSSTATUS=$(kubectl get pods -a utils | grep utils | awk '{print $3}')
+    UTILSCOUNT=$(kubectl get pods -a utils | grep "0/3" | grep "Completed" | wc -l | awk '{print $1}')
 done
 
 echo "Waiting for 15 seconds for peers and orderer to settle"

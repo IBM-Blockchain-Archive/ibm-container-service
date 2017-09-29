@@ -20,7 +20,6 @@ echo ""
 echo "=> CREATE_ALL: Running Create Channel"
 PEER_MSPID="Org1MSP" CHANNEL_NAME="channel1" create/create_channel.sh
 
-exit 1
 echo ""
 echo "=> CREATE_ALL: Running Join Channel on Org1 Peer1"
 CHANNEL_NAME="channel1" PEER_MSPID="Org1MSP" PEER_ADDRESS="blockchain-org1peer1:30110" MSP_CONFIGPATH="/shared/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp" create/join_channel.sh
