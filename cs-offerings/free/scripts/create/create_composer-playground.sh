@@ -8,6 +8,33 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
+WITH_COUCHDB=false
+PAID=false
+
+Parse_Arguments() {
+	while [ $# -gt 0 ]; do
+		case $1 in
+			--with-couchdb)
+				echo "Configured to setup network with couchdb"
+				WITH_COUCHDB=true
+				;;
+			--paid)
+				echo "Configured to setup a paid storage on ibm-cs"
+				PAID=true
+				;;
+		esac
+		shift
+	done
+}
+
+Parse_Arguments $@
+
+if [ "${PAID}" == "true" ]; then
+	OFFERING="paid"
+else
+	OFFERING="free"
+fi
+
 echo "Creating composer-identity-import pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml"
 kubectl create -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml
@@ -40,8 +67,8 @@ kubectl create -f ${KUBECONFIG_FOLDER}/composer-playground.yaml
 
 if [ "$(kubectl get svc | grep composer-playground | wc -l | awk '{print $1}')" == "0" ]; then
     echo "Creating composer-playground service"
-    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/composer-playground-services.yaml"
-    kubectl create -f ${KUBECONFIG_FOLDER}/composer-playground-services.yaml
+    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/composer-playground-${OFFERING}.yaml"
+    kubectl create -f ${KUBECONFIG_FOLDER}/composer-playground-services-${OFFERING}.yaml
 fi
 
 echo "Checking if all deployments are ready"

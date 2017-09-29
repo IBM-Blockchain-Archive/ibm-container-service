@@ -8,9 +8,39 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
-COMPOSER_BUSINESS_NETWORK=$1
+WITH_COUCHDB=false
+PAID=false
+
+Parse_Arguments() {
+	while [ $# -gt 0 ]; do
+		case $1 in
+			--with-couchdb)
+				echo "Configured to setup network with couchdb"
+				WITH_COUCHDB=true
+				;;
+			--paid)
+				echo "Configured to setup a paid storage on ibm-cs"
+				PAID=true
+				;;
+			--business-network-id)
+				shift
+				COMPOSER_BUSINESS_NETWORK=$1
+				;;	
+		esac
+		shift
+	done
+}
+
+Parse_Arguments $@
+
+if [ "${PAID}" == "true" ]; then
+	OFFERING="paid"
+else
+	OFFERING="free"
+fi
+
 if [ -z ${COMPOSER_BUSINESS_NETWORK} ]; then
-	echo "Usage: $0 <businessNetworkId>"
+	echo "Usage: $0 --business-network-id <business-network-name> [--paid]"
     exit 1
 fi
 
@@ -23,8 +53,8 @@ kubectl create -f ${KUBECONFIG_FOLDER}/composer-rest-server.yaml
 
 if [ "$(kubectl get svc | grep composer-rest-server | wc -l | awk '{print $1}')" == "0" ]; then
     echo "Creating composer-rest-server service"
-    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/composer-rest-server-services.yaml"
-    kubectl create -f ${KUBECONFIG_FOLDER}/composer-rest-server-services.yaml
+    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/composer-rest-server-services-${OFFERING}.yaml"
+    kubectl create -f ${KUBECONFIG_FOLDER}/composer-rest-server-services-${OFFERING}.yaml
 fi
 
 echo "Composer rest server created successfully"

@@ -8,19 +8,46 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
-echo "Creating Services for blockchain network"
-if [ "${1}" == "--with-couchdb" ]; then
-    # Use the yaml file with couchdb
-    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services.yaml"
-    kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services.yaml
+WITH_COUCHDB=false
+PAID=false
+
+Parse_Arguments() {
+	while [ $# -gt 0 ]; do
+		case $1 in
+			--with-couchdb)
+				echo "Configured to setup network with couchdb"
+				WITH_COUCHDB=true
+				;;
+			--paid)
+				echo "Configured to setup a paid storage on ibm-cs"
+				PAID=true
+				;;
+		esac
+		shift
+	done
+}
+
+Parse_Arguments $@
+
+if [ "${PAID}" == "true" ]; then
+	OFFERING="paid"
 else
-    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml"
-    kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-services.yaml
+	OFFERING="free"
+fi
+
+echo "Creating Services for blockchain network"
+if [ "${WITH_COUCHDB}" == "true" ]; then
+    # Use the yaml file with couchdb
+    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services-${OFFERING}.yaml"
+    kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb-services-${OFFERING}.yaml
+else
+    echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-services-${OFFERING}.yaml"
+    kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-services-${OFFERING}.yaml
 fi
 
 
 echo "Creating new Deployment"
-if [ "${1}" == "--with-couchdb" ]; then
+if [ "${WITH_COUCHDB}" == "true" ]; then
     # Use the yaml file with couchdb
     echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml"
     kubectl create -f ${KUBECONFIG_FOLDER}/blockchain-couchdb.yaml
