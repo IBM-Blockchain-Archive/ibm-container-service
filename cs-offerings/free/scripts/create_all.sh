@@ -8,13 +8,41 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
+WITH_COUCHDB=false
+PAID_STORAGE=false
+
+Parse_Arguments() {
+	while [ $# -gt 0 ]; do
+		case $1 in
+			--with-couchdb)
+				echo "Configured to setup network with couchdb"
+				WITH_COUCHDB=true
+				;;
+			--paid-storage)
+				echo "Configured to setup a paid storage on ibm-cs"
+				PAID_STORAGE=true
+		esac
+		shift
+	done
+}
+
+Parse_Arguments $@
+
 echo ""
 echo "=> CREATE_ALL: Creating storage"
-create/create_storage.sh
+if [ "$PAID_STORAGE" == "true" ]; then
+	create/create_storage.sh --paid
+else
+	create/create_storage.sh 
+fi
 
 echo ""
 echo "=> CREATE_ALL: Creating blockchain"
-create/create_blockchain.sh ${1}
+if [ "$WITH_COUCHDB" == "true" ]; then
+	create/create_blockchain.sh --with-couchdb
+else
+	create/create_blockchain.sh
+fi
 
 echo ""
 echo "=> CREATE_ALL: Running Create Channel"
