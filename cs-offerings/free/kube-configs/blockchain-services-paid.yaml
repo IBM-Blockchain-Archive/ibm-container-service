@@ -3,6 +3,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: blockchain-ca
+  annotations: 
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: public 
   labels:
     run: blockchain-ca
 spec:
@@ -20,6 +22,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: blockchain-orderer
+  annotations: 
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: public 
   labels:
     run: blockchain-orderer
 spec:
@@ -37,6 +41,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: blockchain-org1peer1
+  annotations: 
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: public 
   labels:
     run: blockchain-org1peer1
 spec:
@@ -59,6 +65,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: blockchain-org2peer1
+  annotations: 
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: public 
   labels:
     run: blockchain-org2peer1
 spec:
