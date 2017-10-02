@@ -48,7 +48,7 @@ spec:
   - name: bootstrap
     image: ibmblockchain/fabric-tools:1.0.1
     imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done; cp -r /sampleconfig/cas /shared; touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer && chown 100 /home/composer && echo 'Done with bootstrapping'" ]
+    command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done && cp -r /sampleconfig/cas /shared && touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer && chown 100 /home/composer && echo 'Done with bootstrapping'" ]
     volumeMounts:
     - mountPath: /shared
       name: shared
@@ -194,7 +194,7 @@ spec:
         - name: CORE_PEER_GOSSIP_BOOTSTRAP
           value: blockchain-org1peer1:30110
         - name: CORE_PEER_GOSSIP_ORGLEADER
-          value: "true"
+          value: "false"
         - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
           value: "true"
         - name: CORE_PEER_COMMITTER_ENABLED
@@ -230,10 +230,9 @@ spec:
         - name: CORE_PEER_TLS_ENABLED
           value: "false"
         - name: CORE_LEDGER_STATE_STATEDATABASE
-          # value: goleveldb
           value: CouchDB
         - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-          value: blockchain-couchdb1:30984
+          value: blockchain-couchdb1:5984
         - name: PEER_CFG_PATH
           value: peer_config/
         - name: FABRIC_CFG_PATH
@@ -242,6 +241,8 @@ spec:
           value: blockchain-orderer:31010
         - name: GODEBUG
           value: "netdns=go"
+        - name: CORE_VM_DOCKER_ATTACHSTDOUT
+          value: "true"
         volumeMounts:
         - mountPath: /shared
           name: shared
@@ -279,13 +280,13 @@ spec:
         - name: CORE_PEER_ADDRESS
           value: blockchain-org2peer1:30210
         - name: CORE_PEER_LISTENADDRESS
-          value: 0.0.0.0:30110
+          value: 0.0.0.0:30210
         - name: CORE_PEER_EVENTS_ADDRESS
-          value: 0.0.0.0:30111
+          value: 0.0.0.0:30211
         - name: CORE_PEER_GOSSIP_BOOTSTRAP
-          value: blockchain-org2peer1:30110
+          value: blockchain-org2peer1:30210
         - name: CORE_PEER_GOSSIP_ORGLEADER
-          value: "true"
+          value: "false"
         - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
           value: "true"
         - name: CORE_PEER_COMMITTER_ENABLED
@@ -323,10 +324,9 @@ spec:
         - name: CORE_PEER_TLS_ENABLED
           value: "false"
         - name: CORE_LEDGER_STATE_STATEDATABASE
-          # value: goleveldb
           value: CouchDB
         - name: CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS
-          value: blockchain-couchdb2:31984
+          value: blockchain-couchdb2:5984
         - name: PEER_CFG_PATH
           value: peer_config/
         - name: FABRIC_CFG_PATH
@@ -335,6 +335,8 @@ spec:
           value: blockchain-orderer:31010
         - name: GODEBUG
           value: "netdns=go"
+        - name: CORE_VM_DOCKER_ATTACHSTDOUT
+          value: "true"
         volumeMounts:
         - mountPath: /shared
           name: shared
