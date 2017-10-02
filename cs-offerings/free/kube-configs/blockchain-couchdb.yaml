@@ -188,11 +188,11 @@ spec:
         - name: CORE_PEER_ADDRESS
           value: blockchain-org1peer1:30110
         - name: CORE_PEER_LISTENADDRESS
-          value: 0.0.0.0:5010
+          value: 0.0.0.0:30110
         - name: CORE_PEER_EVENTS_ADDRESS
-          value: 0.0.0.0:5011
+          value: 0.0.0.0:30111
         - name: CORE_PEER_GOSSIP_BOOTSTRAP
-          value: blockchain-org1peer1:5010
+          value: blockchain-org1peer1:30110
         - name: CORE_PEER_GOSSIP_ORGLEADER
           value: "true"
         - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
@@ -279,11 +279,11 @@ spec:
         - name: CORE_PEER_ADDRESS
           value: blockchain-org2peer1:30210
         - name: CORE_PEER_LISTENADDRESS
-          value: 0.0.0.0:5010
+          value: 0.0.0.0:30110
         - name: CORE_PEER_EVENTS_ADDRESS
-          value: 0.0.0.0:5011
+          value: 0.0.0.0:30111
         - name: CORE_PEER_GOSSIP_BOOTSTRAP
-          value: blockchain-org2peer1:5010
+          value: blockchain-org2peer1:30110
         - name: CORE_PEER_GOSSIP_ORGLEADER
           value: "true"
         - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
