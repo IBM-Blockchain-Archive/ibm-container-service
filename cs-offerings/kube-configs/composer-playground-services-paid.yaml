@@ -12,6 +12,7 @@ spec:
     name: composer-playground
   ports:
   - protocol: TCP
-    port: 8080
     nodePort: 31080
+    targetPort: 8080
+    port: 31080
     name: http

@@ -12,6 +12,7 @@ spec:
     name: composer-rest-server
   ports:
   - protocol: TCP
-    port: 3000
     nodePort: 31090
+    targetPort: 3000
+    port: 31090
     name: http
