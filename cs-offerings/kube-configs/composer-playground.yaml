@@ -42,13 +42,13 @@ spec:
                       }
                   ],
                   "ca": {
-                      "url": "http://blockchain-ca:7054",
+                      "url": "http://blockchain-ca:30000",
                       "name": "CA1"
                   },
                   "peers": [
                       {
-                          "requestURL": "grpc://blockchain-org1peer1:5010",
-                          "eventURL": "grpc://blockchain-org1peer1:5011"
+                          "requestURL": "grpc://blockchain-org1peer1:30110",
+                          "eventURL": "grpc://blockchain-org1peer1:30111"
                       }
                   ],
                   "keyValStore": "/home/composer/.hfc-key-store",

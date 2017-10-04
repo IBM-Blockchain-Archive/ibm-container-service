@@ -8,6 +8,28 @@ else
     echo "Please run the script from 'scripts' or 'scripts/delete' folder"
 fi
 
+PAID=false
+
+Parse_Arguments() {
+	while [ $# -gt 0 ]; do
+		case $1 in
+			--paid)
+				echo "Configured to setup a paid storage on ibm-cs"
+				PAID=true
+				;;
+		esac
+		shift
+	done
+}
+
+Parse_Arguments $@
+
+if [ "${PAID}" == "true" ]; then
+	OFFERING="paid"
+else
+	OFFERING="free"
+fi
+
 echo "Deleting composer-identity-import pod"
 echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml"
 kubectl delete -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml
@@ -27,8 +49,8 @@ while [ "$(kubectl get deployments | grep composer-playground | wc -l | awk '{pr
 done
 
 echo "Deleting Composer Playground services"
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/composer-playground-services.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/composer-playground-services.yaml
+echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/composer-playground-services-${OFFERING}.yaml"
+kubectl delete -f ${KUBECONFIG_FOLDER}/composer-playground-services-${OFFERING}.yaml
 
 while [ "$(kubectl get svc | grep composer-playground | wc -l | awk '{print $1}')" != "0" ]; do
 	echo "Waiting for composer-playground service to be deleted"

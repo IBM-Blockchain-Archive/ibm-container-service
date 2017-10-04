@@ -23,7 +23,7 @@ spec:
     - name: ORDERER_URL
       value: blockchain-orderer:31010
     - name: CORE_PEER_ADDRESS
-      value: blockchain-org2peer1:5010
+      value: blockchain-org2peer1:30210
     - name: CORE_PEER_LOCALMSPID
       value: Org2MSP
     - name: CORE_LOGGING_LEVEL
