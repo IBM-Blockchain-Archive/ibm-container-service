@@ -191,12 +191,12 @@ spec:
           value: 0.0.0.0:30110
         - name: CORE_PEER_EVENTS_ADDRESS
           value: 0.0.0.0:30111
-        # - name: CORE_PEER_GOSSIP_BOOTSTRAP
-          # value: blockchain-org1peer1:30110
-        # - name: CORE_PEER_GOSSIP_ORGLEADER
-          # value: "true"
-        # - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
-          # value: "true"
+         - name: CORE_PEER_GOSSIP_BOOTSTRAP
+           value: blockchain-org1peer1:30110
+         - name: CORE_PEER_GOSSIP_ORGLEADER
+           value: "true"
+         - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
+           value: "true"
         - name: CORE_PEER_COMMITTER_ENABLED
           value: "true"
         - name: CORE_PEER_PROFILE_ENABLED
@@ -279,12 +279,12 @@ spec:
           value: 0.0.0.0:30210
         - name: CORE_PEER_EVENTS_ADDRESS
           value: 0.0.0.0:30211
-        # - name: CORE_PEER_GOSSIP_BOOTSTRAP
-          # value: blockchain-org2peer1:30210
-        # - name: CORE_PEER_GOSSIP_ORGLEADER
-          # value: "true"
-        # - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
-          # value: "true"
+        - name: CORE_PEER_GOSSIP_BOOTSTRAP
+          value: blockchain-org2peer1:30210
+        - name: CORE_PEER_GOSSIP_ORGLEADER
+          value: "true"
+        - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
+          value: "true"
         - name: CORE_PEER_COMMITTER_ENABLED
           value: "true"
         - name: CORE_PEER_PROFILE_ENABLED
