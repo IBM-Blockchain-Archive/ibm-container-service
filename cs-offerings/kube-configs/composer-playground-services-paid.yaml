@@ -4,6 +4,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: composer-playground
+  annotations: 
+    service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: public 
   labels:
     run: composer-playground
 spec:
