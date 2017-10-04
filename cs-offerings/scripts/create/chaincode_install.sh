@@ -10,11 +10,11 @@ fi
 
 # Default to peer 1's address if not defined
 if [ -z "${PEER_ADDRESS}" ]; then
-	echo "PEER_ADDRESS not defined. I will use \"blockchain-org1peer1:5010\"."
+	echo "PEER_ADDRESS not defined. I will use \"blockchain-org1peer1:30110\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-PEER_ADDRESS=${PEER_ADDRESS:-blockchain-org1peer1:5010}
+PEER_ADDRESS=${PEER_ADDRESS:-blockchain-org1peer1:30110}
 
 # Default to "Org1MSP" if not defined
 if [ -z ${PEER_MSPID} ]; then

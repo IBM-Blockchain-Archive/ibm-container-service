@@ -75,7 +75,7 @@ Organizations:
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
             - Host: blockchain-org1peer1
-              Port: 5010
+              Port: 30110
 
     - &Org2
         # DefaultOrg defines the organization which is used in the sampleconfig
@@ -97,7 +97,7 @@ Organizations:
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
             - Host: blockchain-org2peer1
-              Port: 5010
+              Port: 30210
 
 ################################################################################
 #

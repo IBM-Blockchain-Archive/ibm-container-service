@@ -7,11 +7,31 @@ else
     echo "Please run the script from 'scripts' or 'scripts/create' folder"
 fi
 
-PUBLIC_IP=$(bx cs workers blockchain | awk 'FNR==3{print $2}')
+PAID=false
+
+Parse_Arguments() {
+	while [ $# -gt 0 ]; do
+		case $1 in
+			--paid)
+				echo "Configured to setup a paid storage on ibm-cs"
+				PAID=true
+				;;
+		esac
+		shift
+	done
+}
+
+Parse_Arguments $@
+
+if [ "${PAID}" == "true" ]; then
+	OFFERING="paid"
+else
+	OFFERING="free"
+fi
 
 echo "Deleting marbles service"
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/marbles-services.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/marbles-services.yaml
+echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/marbles-services-${OFFERING}.yaml"
+kubectl delete -f ${KUBECONFIG_FOLDER}/marbles-services-${OFFERING}.yaml
 
 sleep 15
 
