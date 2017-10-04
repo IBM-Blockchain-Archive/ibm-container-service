@@ -5,7 +5,7 @@
 	"description": "Connection Profile for an IBM Blockchain Network on the container service",
 	"version": "1.0.0",
 	"client": {
-		"organization": "Org2MSP"
+		"organization": "Org1MSP"
 	},
 	"channels": {
 		"channel1": {
@@ -13,7 +13,7 @@
 				"fabric-orderer"
 			],
 			"peers": {
-				"fabric-peer-org2": {
+				"fabric-peer-org1": {
 					"endorsingPeer": true,
 					"chaincodeQuery": true,
 					"ledgerQuery": true,
@@ -26,10 +26,10 @@
 		}
 	},
 	"organizations": {
-		"Org2MSP": {
-			"mspid": "Org2MSP",
+		"Org1MSP": {
+			"mspid": "Org1MSP",
 			"peers": [
-				"blockchain-org2peer1"
+				"blockchain-org1peer1"
 			],
 			"certificateAuthorities": [
 				"blockchain-ca"
@@ -44,18 +44,18 @@
 	},
 	"orderers": {
 		"fabric-orderer": {
-			"url": "grpc://PUBLICIP:31010"
+			"url": "grpc://ORDERER-PUBLICIP:31010"
 		}
 	},
 	"peers": {
-		"blockchain-org2peer1": {
-			"url": "grpc://PUBLICIP:30210",
-			"eventUrl": "grpc://PUBLICIP:30211"
+		"blockchain-org1peer1": {
+			"url": "grpc://ORG1PEER1-PUBLICIP:30110",
+			"eventUrl": "grpc://ORG1PEER1-PUBLICIP:30111"
 		}
 	},
 	"certificateAuthorities": {
 		"blockchain-ca": {
-			"url": "http://PUBLICIP:30000",
+			"url": "http://CA-PUBLICIP:30000",
 			"httpOptions": {
 				"verify": true
 			},
@@ -65,7 +65,7 @@
 					"enrollSecret": "adminpw"
 				}
 			],
-			"caName": "CA2"
+			"caName": "CA1"
 		}
 	}
 }

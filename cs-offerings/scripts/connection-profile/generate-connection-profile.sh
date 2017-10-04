@@ -2,14 +2,16 @@
 
 ORG=""
 CLUSTER_NAME=""
+PAID="false"
 
 Usage() {
 	echo ""
-	echo "Usage: ./generate-connection-profile.sh -o <org1|org2> -c <cluster-name>"
+	echo "Usage: ./generate-connection-profile.sh -o <org1|org2> -c <cluster-name> [--paid]"
 	echo ""
 	echo "Options:"
-	echo "	-o or -organization: 	org1 or org2 based on what organization you want the connection profile for."
-	echo "	-c or -cluster:		the ibm-container service cluster name."
+	echo "	-o or --organization: 	org1 or org2 based on what organization you want the connection profile for."
+	echo "	-c or --cluster:		the ibm-container service cluster name."
+	echo "  --paid					if you are using a paid cluster"
 	echo ""
 	echo "Example: ./generate-connection-profile.sh -o org1 -c blockchain"
 	echo ""
@@ -26,6 +28,9 @@ Parse_Arguments() {
 			--cluster-name | -c)
 				shift
 				CLUSTER_NAME=$1
+				;;
+			--paid)
+				PAID=true
 				;;
 		esac
 		shift
