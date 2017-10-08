@@ -31,9 +31,9 @@ function cleanEnvironment() {
         echo ${HELM_RELEASES}...
         helm delete --purge ${HELM_RELEASES}
     fi
-    
+
     # Wipe the /shared persistent volume
-    kubectl create -f ../cs-offerings/free/kube-configs/wipe_shared.yaml
+    kubectl create -f ../cs-offerings/kube-configs/wipe_shared.yaml
 
     # Wait for the wipe shared pod to finish
     while [ "$(kubectl get pod -a wipeshared | grep wipeshared | awk '{print $3}')" != "Completed" ]; do
@@ -42,7 +42,7 @@ function cleanEnvironment() {
     done
 
     # Delete the wipe shared pod
-    kubectl delete -f ../cs-offerings/free/kube-configs/wipe_shared.yaml
+    kubectl delete -f ../cs-offerings/kube-configs/wipe_shared.yaml
 }
 
 #
@@ -98,8 +98,8 @@ function startNetwork() {
     TOTAL_RUNNING=4
     TOTAL_COMPLETED=1
 
-    # Move into the directory 
-    pushd ibm-blockchain-network >/dev/null 2>&1 
+    # Move into the directory
+    pushd ibm-blockchain-network >/dev/null 2>&1
 
     # Install the chart
     helm install --name ${RELEASE_NAME} .
@@ -108,7 +108,7 @@ function startNetwork() {
     # Ensure the correct number of pods are running and completed
     checkPodStatus ${TOTAL_RUNNING} ${TOTAL_COMPLETED}
 
-    popd >/dev/null 2>&1 
+    popd >/dev/null 2>&1
 }
 
 #
@@ -119,8 +119,8 @@ function startChannel() {
     TOTAL_RUNNING=4
     TOTAL_COMPLETED=4
 
-    # Move into the directory 
-    pushd ibm-blockchain-channel >/dev/null 2>&1 
+    # Move into the directory
+    pushd ibm-blockchain-channel >/dev/null 2>&1
 
     # Install the chart
     helm install --name ${RELEASE_NAME} .
@@ -129,7 +129,7 @@ function startChannel() {
     # Ensure the correct number of pods are running and completed
     checkPodStatus ${TOTAL_RUNNING} ${TOTAL_COMPLETED}
 
-    popd >/dev/null 2>&1 
+    popd >/dev/null 2>&1
 }
 
 #
@@ -140,8 +140,8 @@ function startChaincode() {
     TOTAL_RUNNING=4
     TOTAL_COMPLETED=7
 
-    # Move into the directory 
-    pushd ibm-blockchain-chaincode >/dev/null 2>&1 
+    # Move into the directory
+    pushd ibm-blockchain-chaincode >/dev/null 2>&1
 
     # Install the chart
     helm install --name ${RELEASE_NAME} .
@@ -149,7 +149,7 @@ function startChaincode() {
     # Ensure the correct number of pods are running and completed
     checkPodStatus ${TOTAL_RUNNING} ${TOTAL_COMPLETED}
 
-    popd >/dev/null 2>&1 
+    popd >/dev/null 2>&1
 }
 
 #
@@ -160,8 +160,8 @@ function startComposer() {
     TOTAL_RUNNING=6
     TOTAL_COMPLETED=8
 
-    # Move into the directory 
-    pushd ibm-blockchain-composer >/dev/null 2>&1 
+    # Move into the directory
+    pushd ibm-blockchain-composer >/dev/null 2>&1
 
     # Install the chart
     helm install --name ${RELEASE_NAME} .
@@ -169,7 +169,7 @@ function startComposer() {
     # Ensure the correct number of pods are running and completed
     checkPodStatus ${TOTAL_RUNNING} ${TOTAL_COMPLETED}
 
-    popd >/dev/null 2>&1 
+    popd >/dev/null 2>&1
 }
 
 #
@@ -181,4 +181,3 @@ startNetwork
 startChannel
 startChaincode
 startComposer
-
