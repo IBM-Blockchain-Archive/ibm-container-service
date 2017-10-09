@@ -8,7 +8,7 @@ spec:
   volumes:
   - name: shared
     persistentVolumeClaim:
-     claimName: shared
+      claimName: shared
   - name: dockersocket
     hostPath:
       path: /var/run/docker.sock
@@ -28,18 +28,18 @@ spec:
     imagePullPolicy: {{.Values.blockchain.pullPolicy}}
     command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_cryptogen_complete ]; do echo Waiting for cryptogen; sleep 1; done; echo 'sample config is =>' && ls /sampleconfig && cp /sampleconfig/configtx.yaml /shared/configtx.yaml; echo 'shared after copy is =>' && ls /shared && cd /shared/; configtxgen -profile TwoOrgsOrdererGenesis -outputBlock orderer.block && find /shared -type d | xargs chmod a+rx && find /shared -type f | xargs chmod a+r && touch /shared/status_configtxgen_complete && rm /shared/status_cryptogen_complete"]
     env:
-     - name: PEERHOST1
-       value: blockchain-org1peer1
-     - name: PEERPORT1
-       value: "30110"
-     - name: PEERHOST2
-       value: blockchain-org2peer1
-     - name: PEERPORT2
-       value: "30210"
-     - name: ORDERER_URL
-       value: blockchain-orderer:31010
-     - name: FABRIC_CFG_PATH
-       value: /shared
+    - name: PEERHOST1
+      value: blockchain-org1peer1
+    - name: PEERPORT1
+      value: "30110"
+    - name: PEERHOST2
+      value: blockchain-org2peer1
+    - name: PEERPORT2
+      value: "30210"
+    - name: ORDERER_URL
+      value: blockchain-orderer:31010
+    - name: FABRIC_CFG_PATH
+      value: /shared
     # - name: GODEBUG
     #   value: "netdns=go"
     volumeMounts:
@@ -48,7 +48,7 @@ spec:
   - name: bootstrap
     image: ibmblockchain/fabric-tools:1.0.1
     imagePullPolicy: {{.Values.blockchain.pullPolicy}}
-    command: ["sh", "-c", "sleep 1 && echo "Starting bootstrap" && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done && echo "Starting bootstrap" && cp -r /sampleconfig/cas /shared && echo "Done copying"  && touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer && chown 100 /home/composer && echo 'Done with bootstrapping'" ]
+    command: ["sh", "-c", "sleep 1 && echo \"Starting bootstrap\" && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done && echo \"Starting bootstrap\" && cp -r /sampleconfig/cas /shared && echo \"Done copying\"  && touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer && chown 100 /home/composer && echo 'Done with bootstrapping'" ]
     volumeMounts:
     - mountPath: /shared
       name: shared
@@ -69,7 +69,7 @@ spec:
       volumes:
       - name: shared
         persistentVolumeClaim:
-         claimName: shared
+          claimName: shared
 
       containers:
       - name: orderer
@@ -129,7 +129,7 @@ spec:
       volumes:
       - name: shared
         persistentVolumeClaim:
-         claimName: shared
+          claimName: shared
 
       containers:
       - name: ca
@@ -171,7 +171,7 @@ spec:
       volumes:
       - name: shared
         persistentVolumeClaim:
-         claimName: shared
+          claimName: shared
       - name: dockersocket
         hostPath:
           path: /var/run/docker.sock
@@ -191,12 +191,12 @@ spec:
           value: 0.0.0.0:30110
         - name: CORE_PEER_EVENTS_ADDRESS
           value: 0.0.0.0:30111
-         - name: CORE_PEER_GOSSIP_BOOTSTRAP
-           value: blockchain-org1peer1:30110
-         - name: CORE_PEER_GOSSIP_ORGLEADER
-           value: "true"
-         - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
-           value: "true"
+        - name: CORE_PEER_GOSSIP_BOOTSTRAP
+          value: blockchain-org1peer1:30110
+        - name: CORE_PEER_GOSSIP_ORGLEADER
+          value: "true"
+        - name: CORE_PEER_GOSSIP_SKIPHANDSHAKE
+          value: "true"
         - name: CORE_PEER_COMMITTER_ENABLED
           value: "true"
         - name: CORE_PEER_PROFILE_ENABLED
@@ -259,7 +259,7 @@ spec:
       volumes:
       - name: shared
         persistentVolumeClaim:
-         claimName: shared
+          claimName: shared
       - name: dockersocket
         hostPath:
           path: /var/run/docker.sock
