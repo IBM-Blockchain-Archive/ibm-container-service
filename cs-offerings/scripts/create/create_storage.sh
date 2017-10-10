@@ -57,7 +57,7 @@ if [ "${PAID}" == "true" ]; then
 		#echo "Note: This can be a normal storage and not a ibm-cs storage, please check for more details"
 	fi
 else
-	if [ "$(kubectl get pvc | grep shared-pvc | awk '{print $3}')" != "shared-pv" ]; then
+	if [ "$(kubectl get pvc | grep shared-pvc | awk '{print $2}')" != "Bound" ]; then
 		echo "The Persistant Volume does not seem to exist or is not bound"
 		echo "Creating Persistant Volume"
 		
