@@ -15,7 +15,7 @@ spec:
 
   containers:
   - name: wipeshared
-    image: ibmblockchain/fabric-tools:1.0.1
+    image: ibmblockchain/fabric-tools:1.0.3
     imagePullPolicy: Always
     command: ["sh", "-c", "rm -rf /shared/* /home/*"]
     volumeMounts:
