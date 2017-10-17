@@ -201,10 +201,6 @@ spec:
           value: "true"
         - name: CORE_PEER_PROFILE_ENABLED
           value: "true"
-        - name: CORE_PEER_DISCOVERY_PERIOD
-          value: 60s
-        - name: CORE_PEER_DISCOVERY_TOUCHPERIOD
-          value: 60s
         - name: CORE_VM_ENDPOINT
           value: unix:///host/var/run/docker.sock
         - name: CORE_PEER_LOCALMSPID
@@ -231,8 +227,6 @@ spec:
           value: "false"
         - name: CORE_LEDGER_STATE_STATEDATABASE
           value: goleveldb
-        - name: PEER_CFG_PATH
-          value: peer_config/
         - name: FABRIC_CFG_PATH
           value: /etc/hyperledger/fabric/
         - name: ORDERER_URL
@@ -289,10 +283,6 @@ spec:
           value: "true"
         - name: CORE_PEER_PROFILE_ENABLED
           value: "true"
-        - name: CORE_PEER_DISCOVERY_PERIOD
-          value: 60s
-        - name: CORE_PEER_DISCOVERY_TOUCHPERIOD
-          value: 60s
         - name: CORE_VM_ENDPOINT
           value: unix:///host/var/run/docker.sock
         - name: CORE_PEER_LOCALMSPID
@@ -321,8 +311,6 @@ spec:
           value: "false"
         - name: CORE_LEDGER_STATE_STATEDATABASE
           value: goleveldb
-        - name: PEER_CFG_PATH
-          value: peer_config/
         - name: FABRIC_CFG_PATH
           value: /etc/hyperledger/fabric/
         - name: ORDERER_URL
