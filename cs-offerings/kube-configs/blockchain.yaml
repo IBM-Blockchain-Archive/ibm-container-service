@@ -19,7 +19,7 @@ spec:
   - name: cryptogen
     image: ibmblockchain/fabric-tools:1.0.3
     imagePullPolicy: Always
-    command: ["sh", "-c", "wget http://ibm.biz/hlfx86_64103 && tar -xvf hlfx86_64103 && bin/cryptogen generate --config /sampleconfig/crypto-config.yaml && cp -r crypto-config /shared/ && for file in $(find /shared/ -iname *_sk); do dir=$(dirname $file); mv ${dir}/*_sk ${dir}/key.pem; done && find /shared -type d | xargs chmod a+rx && find /shared -type f | xargs chmod a+r && touch /shared/status_cryptogen_complete "]
+    command: ["sh", "-c", "cryptogen generate --config /sampleconfig/crypto-config.yaml && cp -r crypto-config /shared/ && for file in $(find /shared/ -iname *_sk); do dir=$(dirname $file); mv ${dir}/*_sk ${dir}/key.pem; done && find /shared -type d | xargs chmod a+rx && find /shared -type f | xargs chmod a+r && touch /shared/status_cryptogen_complete "]
     volumeMounts:
     - mountPath: /shared
       name: shared
