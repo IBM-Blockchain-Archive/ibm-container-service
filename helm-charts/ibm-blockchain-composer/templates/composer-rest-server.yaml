@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: composer-rest-server
-        image: hyperledger/composer-rest-server
+        image: hyperledger/composer-rest-server:0.13.2
         imagePullPolicy: {{.Values.blockchain.pullPolicy}}
         env:
         - name: COMPOSER_CONFIG
