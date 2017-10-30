@@ -14,7 +14,7 @@ spec:
   ports:
   - protocol: TCP
     port: 7054
-    nodePort: 30000
+    nodePort: 30054
     name: grpc
 ---
 apiVersion: v1
