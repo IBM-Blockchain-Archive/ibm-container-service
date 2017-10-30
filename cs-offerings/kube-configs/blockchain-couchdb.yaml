@@ -48,11 +48,11 @@ spec:
   - name: bootstrap
     image: ibmblockchain/fabric-tools:1.0.3
     imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done && cp -r /sampleconfig/cas /shared && touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer && chown 100 /home/composer && echo 'Done with bootstrapping'" ]
+    command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done && cp -r /sampleconfig/cas /shared && touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer/.hfc-key-store && chown 100 /home/composer/.hfc-key-store && echo 'Done with bootstrapping'" ]
     volumeMounts:
     - mountPath: /shared
       name: shared
-    - mountPath: /home
+    - mountPath: /home/composer/.hfc-key-store
       name: composer-credentials
 ---
 apiVersion: extensions/v1beta1

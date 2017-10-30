@@ -10,9 +10,13 @@ spec:
       labels:
         name: composer-rest-server
     spec:
+      volumes:
+      - name: composer-credentials
+        persistentVolumeClaim:
+          claimName: composer-pvc
       containers:
       - name: composer-rest-server
-        image: hyperledger/composer-rest-server:0.13.2
+        image: hyperledger/composer-rest-server
         imagePullPolicy: Always
         env:
         - name: COMPOSER_CONFIG
@@ -60,3 +64,6 @@ spec:
           value: adminpw
         - name: COMPOSER_NAMESPACES
           value: never
+        volumeMounts:
+        - name: composer-credentials
+          mountPath: /home/composer/.hfc-key-store
