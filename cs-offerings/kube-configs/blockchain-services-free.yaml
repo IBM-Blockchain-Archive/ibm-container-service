@@ -11,9 +11,9 @@ spec:
     name: ca
   ports:
   - protocol: TCP
-    nodePort: 30000
+    nodePort: 30054
     targetPort: 7054
-    port: 30000
+    port: 30054
     name: grpc
 ---
 apiVersion: v1

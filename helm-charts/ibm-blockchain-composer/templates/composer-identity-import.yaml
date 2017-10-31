@@ -14,7 +14,7 @@ spec:
       claimName: composer-pvc
   containers:
   - name: composer-identity-import
-    image: hyperledger/composer-cli:0.13.2
+    image: hyperledger/composer-cli
     imagePullPolicy: {{.Values.blockchain.pullPolicy}}
     command: ["sh", "-c", "while [ ! -f /shared/status_chaincodeinstantiate_complete ]; do echo Waiting for chaincodeinstantiate; sleep 2; done; composer identity import -p hlfv1 -u PeerAdmin -c /shared/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem -k /shared/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/key.pem"]
     env:
@@ -31,7 +31,7 @@ spec:
                   }
               ],
               "ca": {
-                  "url": "http://blockchain-ca:30000",
+                  "url": "http://blockchain-ca:30054",
                   "name": "CA1"
               },
               "peers": [
@@ -55,7 +55,7 @@ spec:
         }
     volumeMounts:
     - name: composer-credentials
-      mountPath: /home
+      mountPath: /home/composer/.hfc-key-store
     - name: shared
       mountPath: /shared
-      
+

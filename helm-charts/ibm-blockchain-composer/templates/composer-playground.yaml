@@ -19,7 +19,7 @@ spec:
           claimName: composer-pvc
       containers:
       - name: composer-playground
-        image: hyperledger/composer-playground:0.13.2
+        image: hyperledger/composer-playground
         imagePullPolicy: {{.Values.blockchain.pullPolicy}}
         env:
         - name: COMPOSER_CONFIG
@@ -35,7 +35,7 @@ spec:
                       }
                   ],
                   "ca": {
-                      "url": "http://blockchain-ca:30000",
+                      "url": "http://blockchain-ca:30054",
                       "name": "CA1"
                   },
                   "peers": [
@@ -59,4 +59,4 @@ spec:
             }
         volumeMounts:
         - name: composer-credentials
-          mountPath: /home
+          mountPath: /home/composer/.hfc-key-store
