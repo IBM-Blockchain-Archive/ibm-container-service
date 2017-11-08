@@ -16,7 +16,7 @@ spec:
           claimName: composer-pvc
       containers:
       - name: composer-rest-server
-        image: hyperledger/composer-rest-server
+        image: hyperledger/composer-rest-server:0.14.2
         imagePullPolicy: Always
         env:
         - name: COMPOSER_CONFIG
