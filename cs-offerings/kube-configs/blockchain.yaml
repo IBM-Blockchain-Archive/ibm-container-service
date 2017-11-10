@@ -182,6 +182,12 @@ spec:
       containers:
       - name: org1peer1
         image: ibmblockchain/fabric-peer:1.0.3
+        resources:
+          limits:
+            cpu: "2"
+        args:
+        - -cpus
+        - "2"
         command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; peer node start --peer-defaultchain=false"]
         env:
         - name: CORE_PEER_ADDRESSAUTODETECT
@@ -266,6 +272,12 @@ spec:
       containers:
       - name: org2peer1
         image: ibmblockchain/fabric-peer:1.0.3
+        resources:
+          limits:
+            cpu: "2"
+        args:
+        - -cpus
+        - "2"
         command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done;  peer node start --peer-defaultchain=false"]
         env:
         - name: CORE_PEER_ADDRESSAUTODETECT
