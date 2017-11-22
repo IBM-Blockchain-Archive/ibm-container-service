@@ -17,9 +17,9 @@ Parse_Arguments() {
 				echo "Configured to setup a paid storage on ibm-cs"
 				PAID=true
 				;;
-			--business-network-id)
+			--business-network-card)
 				shift
-				COMPOSER_BUSINESS_NETWORK=$1
+				COMPOSER_CARD=$1
 				;;	
 		esac
 		shift
@@ -34,13 +34,13 @@ else
 	OFFERING="free"
 fi
 
-if [ -z ${COMPOSER_BUSINESS_NETWORK} ]; then
-	echo "Usage: $0 --business-network-id <business-network-name> [--paid]"
+if [ -z ${COMPOSER_CARD} ]; then
+	echo "Usage: $0 --business-network-card <business-network-card> [--paid]"
     exit 1
 fi
 
 echo "Preparing yaml file for create composer-rest-server"
-sed -e "s/%COMPOSER_BUSINESS_NETWORK%/${COMPOSER_BUSINESS_NETWORK}/g" ${KUBECONFIG_FOLDER}/composer-rest-server.yaml.base > ${KUBECONFIG_FOLDER}/composer-rest-server.yaml
+sed -e "s/%COMPOSER_CARD%/${COMPOSER_CARD}/g" ${KUBECONFIG_FOLDER}/composer-rest-server.yaml.base > ${KUBECONFIG_FOLDER}/composer-rest-server.yaml
 
 echo "Creating composer-rest-server pod"
 echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/composer-rest-server.yaml"

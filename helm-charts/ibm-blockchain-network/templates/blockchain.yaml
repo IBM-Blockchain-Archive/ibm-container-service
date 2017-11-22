@@ -12,7 +12,7 @@ spec:
   - name: dockersocket
     hostPath:
       path: /var/run/docker.sock
-  - name: composer-credentials
+  - name: composer-card-store
     persistentVolumeClaim:
       claimName: composer-pvc
   containers:
@@ -48,12 +48,12 @@ spec:
   - name: bootstrap
     image: ibmblockchain/fabric-tools:1.0.3
     imagePullPolicy: {{.Values.blockchain.pullPolicy}}
-    command: ["sh", "-c", "sleep 1 && echo \"Starting bootstrap\" && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done && echo \"Starting bootstrap\" && cp -r /sampleconfig/cas /shared && echo \"Done copying\"  && touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer/.hfc-key-store && chown 100 /home/composer/.hfc-key-store && echo 'Done with bootstrapping'" ]
+    command: ["sh", "-c", "sleep 1 && echo \"Starting bootstrap\" && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done && echo \"Starting bootstrap\" && cp -r /sampleconfig/cas /shared && echo \"Done copying\"  && touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer/.composer && chown 1000 /home/composer/.composer && echo 'Done with bootstrapping'" ]
     volumeMounts:
     - mountPath: /shared
       name: shared
-    - mountPath: /home/composer/.hfc-key-store
-      name: composer-credentials
+    - mountPath: /home/composer/.composer
+      name: composer-card-store
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
