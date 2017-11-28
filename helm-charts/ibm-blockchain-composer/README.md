@@ -42,9 +42,10 @@ The command removes all the Kubernetes components associated with the chart and 
 
 The following tables lists the configurable parameters of the IBM Blockchain chart and their default values.
 
-|             Parameter              |               Description                |                         Default                          |
-|------------------------------------|------------------------------------------|----------------------------------------------------------|
-| `blockchain.pullPolicy`            | Blockchain image pull policy             | `Always`                                                 |
+|             Parameter               |               Description                  |                         Default                          |
+|-------------------------------------|--------------------------------------------|----------------------------------------------------------|
+| `blockchain.pullPolicy`             | Blockchain image pull policy               | `Always`                                                 |
+| `blockchain.composerRestServerCard` | card to use to connect to business network |                                                          | 
 
 
 The above parameters map to the env variables defined in [IBM-Blockchain/ibm-container-service](https://github.ibm.com/IBM-Blockchain/ibm-container-service). For more information please refer to the [IBM-Blockchain/ibm-container-service](https://github.ibm.com/IBM-Blockchain/ibm-container-service) documentation.

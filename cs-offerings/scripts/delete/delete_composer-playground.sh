@@ -30,12 +30,12 @@ else
 	OFFERING="free"
 fi
 
-echo "Deleting composer-identity-import pod"
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml
+echo "Deleting composer-card-import pod"
+echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/composer-card-import.yaml"
+kubectl delete -f ${KUBECONFIG_FOLDER}/composer-card-import.yaml
 
-while [ "$(kubectl get svc | grep composer-identity-import | wc -l | awk '{print $1}')" != "0" ]; do
-	echo "Waiting for composer-identity-import pod to be deleted"
+while [ "$(kubectl get svc | grep composer-card-import | wc -l | awk '{print $1}')" != "0" ]; do
+	echo "Waiting for composer-card-import pod to be deleted"
 	sleep 1;
 done
 

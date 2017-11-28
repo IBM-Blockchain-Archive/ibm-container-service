@@ -6,7 +6,7 @@ metadata:
 spec:
   restartPolicy: "Never"
   volumes:
-  - name: composer-credentials
+  - name: composer-card-store
     persistentVolumeClaim:
       claimName: composer-pvc
   - name: shared
@@ -19,7 +19,7 @@ spec:
     imagePullPolicy: Always
     command: ["sh", "-c", "rm -rf /shared/* /home/*"]
     volumeMounts:
-    - name: composer-credentials
+    - name: composer-card-store
       mountPath: /home
     - mountPath: /shared
       name: shared

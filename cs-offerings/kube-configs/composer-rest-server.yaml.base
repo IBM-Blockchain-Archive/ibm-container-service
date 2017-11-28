@@ -11,59 +11,18 @@ spec:
         name: composer-rest-server
     spec:
       volumes:
-      - name: composer-credentials
+      - name: composer-card-store
         persistentVolumeClaim:
           claimName: composer-pvc
       containers:
       - name: composer-rest-server
-        image: hyperledger/composer-rest-server:0.14.2
+        image: hyperledger/composer-rest-server:0.16.0
         imagePullPolicy: Always
         env:
-        - name: COMPOSER_CONFIG
-          value: >
-            {
-              "defaultConnectionProfile": "hlfv1",
-              "connectionProfiles": {
-                "hlfv1": {
-                  "type": "hlfv1",
-                  "orderers": [
-                      {
-                          "url": "grpc://blockchain-orderer:31010"
-                      }
-                  ],
-                  "ca": {
-                      "url": "http://blockchain-ca:30054",
-                      "name": "CA1"
-                  },
-                  "peers": [
-                      {
-                          "requestURL": "grpc://blockchain-org1peer1:30110",
-                          "eventURL": "grpc://blockchain-org1peer1:30111"
-                      }
-                  ],
-                  "keyValStore": "/home/composer/.hfc-key-store",
-                  "channel": "channel1",
-                  "mspID": "Org1MSP",
-                  "timeout": "300"
-                }
-              },
-              "credentials": {
-                "hlfv1": {
-                  "PeerAdmin": "notneeded",
-                  "admin": "adminpw"
-                }
-              }
-            }
-        - name: COMPOSER_CONNECTION_PROFILE
-          value: hlfv1
-        - name: COMPOSER_BUSINESS_NETWORK
-          value: %COMPOSER_BUSINESS_NETWORK%
-        - name: COMPOSER_ENROLLMENT_ID
-          value: admin
-        - name: COMPOSER_ENROLLMENT_SECRET
-          value: adminpw
+        - name: COMPOSER_CARD
+          value: %COMPOSER_CARD%
         - name: COMPOSER_NAMESPACES
           value: never
         volumeMounts:
-        - name: composer-credentials
-          mountPath: /home/composer/.hfc-key-store
+        - name: composer-card-store
+          mountPath: /home/composer/.composer

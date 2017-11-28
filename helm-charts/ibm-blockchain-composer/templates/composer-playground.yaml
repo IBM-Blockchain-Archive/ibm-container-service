@@ -14,49 +14,13 @@ spec:
       - name: shared
         persistentVolumeClaim:
          claimName: shared
-      - name: composer-credentials
+      - name: composer-card-store
         persistentVolumeClaim:
           claimName: composer-pvc
       containers:
       - name: composer-playground
-        image: hyperledger/composer-playground:0.14.2
+        image: hyperledger/composer-playground:0.16.0
         imagePullPolicy: {{.Values.blockchain.pullPolicy}}
-        env:
-        - name: COMPOSER_CONFIG
-          value: >
-            {
-              "defaultConnectionProfile": "hlfv1",
-              "connectionProfiles": {
-                "hlfv1": {
-                  "type": "hlfv1",
-                  "orderers": [
-                      {
-                          "url": "grpc://blockchain-orderer:31010"
-                      }
-                  ],
-                  "ca": {
-                      "url": "http://blockchain-ca:30054",
-                      "name": "CA1"
-                  },
-                  "peers": [
-                      {
-                          "requestURL": "grpc://blockchain-org1peer1:30110",
-                          "eventURL": "grpc://blockchain-org1peer1:30111"
-                      }
-                  ],
-                  "keyValStore": "/home/composer/.hfc-key-store",
-                  "channel": "channel1",
-                  "mspID": "Org1MSP",
-                  "timeout": "300"
-                }
-              },
-              "credentials": {
-                "hlfv1": {
-                  "PeerAdmin": "notneeded",
-                  "admin": "adminpw"
-                }
-              }
-            }
         volumeMounts:
-        - name: composer-credentials
-          mountPath: /home/composer/.hfc-key-store
+        - name: composer-card-store
+          mountPath: /home/composer/.composer

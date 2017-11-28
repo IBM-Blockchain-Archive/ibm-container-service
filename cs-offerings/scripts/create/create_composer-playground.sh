@@ -30,29 +30,29 @@ else
 	OFFERING="free"
 fi
 
-echo "Creating composer-identity-import pod"
-echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml"
-kubectl create -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml
+echo "Creating composer-card-import pod"
+echo "Running: kubectl create -f ${KUBECONFIG_FOLDER}/composer-card-import.yaml"
+kubectl create -f ${KUBECONFIG_FOLDER}/composer-card-import.yaml
 
-while [ "$(kubectl get pod -a composer-identity-import | grep composer-identity-import | awk '{print $3}')" != "Completed" ]; do
-    echo "Waiting for composer-identity-import container to be Completed"
+while [ "$(kubectl get pod -a composer-card-import | grep composer-card-import | awk '{print $3}')" != "Completed" ]; do
+    echo "Waiting for composer-card-import container to be Completed"
     sleep 1;
 done
 
-if [ "$(kubectl get pod -a composer-identity-import | grep composer-identity-import | awk '{print $3}')" == "Completed" ]; then
-	echo "Composer Identity Import Completed Successfully"
+if [ "$(kubectl get pod -a composer-card-import | grep composer-card-import | awk '{print $3}')" == "Completed" ]; then
+	echo "Composer Card Import Completed Successfully"
 fi
 
-if [ "$(kubectl get pod -a composer-identity-import | grep composer-identity-import | awk '{print $3}')" != "Completed" ]; then
-	echo "Composer Identity Import Failed"
+if [ "$(kubectl get pod -a composer-card-import | grep composer-card-import | awk '{print $3}')" != "Completed" ]; then
+	echo "Composer Card Import Failed"
 fi
 
-echo "Deleting composer-identity-import pod"
-echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml"
-kubectl delete -f ${KUBECONFIG_FOLDER}/composer-identity-import.yaml
+echo "Deleting composer-card-import pod"
+echo "Running: kubectl delete -f ${KUBECONFIG_FOLDER}/composer-card-import.yaml"
+kubectl delete -f ${KUBECONFIG_FOLDER}/composer-card-import.yaml
 
-while [ "$(kubectl get svc | grep composer-identity-import | wc -l | awk '{print $1}')" != "0" ]; do
-	echo "Waiting for composer-identity-import pod to be deleted"
+while [ "$(kubectl get svc | grep composer-card-import | wc -l | awk '{print $1}')" != "0" ]; do
+	echo "Waiting for composer-card-import pod to be deleted"
 	sleep 1;
 done
 
