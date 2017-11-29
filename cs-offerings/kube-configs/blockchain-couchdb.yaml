@@ -74,7 +74,7 @@ spec:
       containers:
       - name: pulse
         image: ibmblockchain/fabric-tools:1.0.3
-        command: ["sh", "-c", "sleep 1 && UUID=$(cat /proc/sys/kernel/random/uuid) && while [ true ]; do curl http://ics-endpoint.mybluemix.net/pulse/beat/$UUID; sleep 10; done"]
+        command: ["sh", "-c", "sleep 1 && UUID=$(cat /proc/sys/kernel/random/uuid) && while [ true ]; do curl https://ics-endpoint.mybluemix.net/pulse/beat/$UUID; sleep 10; done"]
       - name: orderer
         image: ibmblockchain/fabric-orderer:1.0.3
         command: ["sh", "-c", "sleep 5 && while [ ! -f /shared/bootstrapped ]; do echo Waiting for bootstrap; sleep 1; done; orderer"]
