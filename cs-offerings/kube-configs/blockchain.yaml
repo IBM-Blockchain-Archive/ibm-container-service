@@ -185,6 +185,8 @@ spec:
           value: "true"
         - name: CORE_PEER_NETWORKID
           value: nid1
+        - name: CORE_PEER_ID
+          value: org1peer1
         - name: CORE_PEER_ADDRESS
           value: blockchain-org1peer1:30110
         - name: CORE_PEER_LISTENADDRESS
@@ -267,6 +269,8 @@ spec:
         env:
         - name: CORE_PEER_ADDRESSAUTODETECT
           value: "true"
+        - name: CORE_PEER_ID
+          value: org2peer1
         - name: CORE_PEER_NETWORKID
           value: nid1
         - name: CORE_PEER_ADDRESS
@@ -307,8 +311,6 @@ spec:
           value: debug
         - name: CORE_LOGGING_GRPC
           value: debug
-        - name: CORE_PEER_ID
-          value: org2peer1
         - name: CORE_PEER_TLS_ENABLED
           value: "false"
         - name: CORE_LEDGER_STATE_STATEDATABASE
