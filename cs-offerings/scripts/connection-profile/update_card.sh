@@ -10,7 +10,7 @@ Usage() {
 	echo ""
 	echo "Options:"
 	echo -e "\t-a or --address:\tUpdate the card to point to a single ip address or hostname"
-	echo -e "\t-f or --card:\t\tThe card file to update"
+	echo -e "\t-c or --card:\t\tThe card file to update"
 	echo ""
 	echo "Example: ./update_card.sh -c admin.card -a 183.154.34.67"
 	echo ""
@@ -26,7 +26,7 @@ Parse_Arguments() {
 				;;
 			--card | -c)
 				shift
-				CARD=$1
+				INCARD=$1
 				;;
 		esac
 		shift
@@ -34,7 +34,7 @@ Parse_Arguments() {
 }
 Parse_Arguments $@
 
-if [ "$CARD" == "" ] || [ "$ADDRESS" == "" ];then
+if [ "$INCARD" == "" ] || [ "$ADDRESS" == "" ];then
 	Usage
 fi
 
@@ -43,8 +43,17 @@ TMPDIR=/tmp/_expandedCard
 rm -fr $TMPDIR
 mkdir $TMPDIR
 
+# get fpq to card
+RELDIR=$(dirname -- "$INCARD")
+BASEFILE=$(basename -- "$INCARD")
+CARD=$(cd "$RELDIR" 2>/dev/null && printf '%s/%s\n' "$(pwd -P)" "$BASEFILE")
+if [ ! -f "$CARD" ];then
+	echo "$CARD does not exist"
+	exit 1
+fi
+
 # unzip the card into storage
-unzip $CARD -d $TMPDIR
+unzip "$CARD" -d $TMPDIR
 
 # patch connection.json
 cat $TMPDIR/connection.json | \
@@ -56,11 +65,11 @@ rm $TMPDIR/connection.json
 mv $TMPDIR/connection2.json $TMPDIR/connection.json
 
 # backup the original file
-mv $CARD $CARD.orig
+mv "$CARD" "$CARD.orig"
 
 # zip up the file
 cd $TMPDIR
-zip -r $CARD *
+zip -r "$CARD" *
 
 # clean up
 cd -
