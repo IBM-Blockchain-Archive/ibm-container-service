@@ -32,17 +32,20 @@ function cleanEnvironment() {
         helm delete --purge ${HELM_RELEASES}
     fi
 
-    # Wipe the /shared persistent volume
-    kubectl create -f ../cs-offerings/kube-configs/wipe_shared.yaml
+    # Wipe the /shared persistent volume if it exists (it should be removed with chart removal)
+    kubectl get pv shared > /dev/null 2>&1
+    if [[ $? -eq 0 ]]; then
+        kubectl create -f ../cs-offerings/kube-configs/wipe_shared.yaml
 
-    # Wait for the wipe shared pod to finish
-    while [ "$(kubectl get pod -a wipeshared | grep wipeshared | awk '{print $3}')" != "Completed" ]; do
-        echo "Waiting for the shared folder to be erased..."
-        sleep 1;
-    done
+        # Wait for the wipe shared pod to finish
+        while [ "$(kubectl get pod -a wipeshared | grep wipeshared | awk '{print $3}')" != "Completed" ]; do
+            echo "Waiting for the shared folder to be erased..."
+            sleep 1;
+        done
 
-    # Delete the wipe shared pod
-    kubectl delete -f ../cs-offerings/kube-configs/wipe_shared.yaml
+        # Delete the wipe shared pod
+        kubectl delete -f ../cs-offerings/kube-configs/wipe_shared.yaml
+    fi
 }
 
 #

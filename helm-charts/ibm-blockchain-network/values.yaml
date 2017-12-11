@@ -36,5 +36,10 @@ resources: {}
   #  cpu: 100m
   #  memory: 128Mi
 
-blockchain: 
+persistence:
+  # If set to "", disables dynamic provisioning and create persistent volumes specified
+  # from the templates. If set, use the defined storage class and do not create pvs.
+  storageClass: ""
+
+blockchain:
   pullPolicy: Always

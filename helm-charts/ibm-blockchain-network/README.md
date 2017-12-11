@@ -45,6 +45,7 @@ The following tables lists the configurable parameters of the IBM Blockchain cha
 |             Parameter              |               Description                |                         Default                          |
 |------------------------------------|------------------------------------------|----------------------------------------------------------|
 | `blockchain.pullPolicy`            | Blockchain image pull policy             | `Always`                                                 |
+| `persistence.storageClass`  | Storage Class for dynamic provisioning | nil |
 
 
 The above parameters map to the env variables defined in [IBM-Blockchain/ibm-container-service](https://github.ibm.com/IBM-Blockchain/ibm-container-service). For more information please refer to the [IBM-Blockchain/ibm-container-service](https://github.ibm.com/IBM-Blockchain/ibm-container-service) documentation.
