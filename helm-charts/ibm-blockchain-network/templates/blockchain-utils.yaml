@@ -17,9 +17,6 @@ spec:
   - name: dockersocket
     hostPath:
       path: /var/run/docker.sock
-  - name: composer-credentials
-    hostPath:
-      path: /composer
   containers:
   - name: cryptogen
     image: {{ .Values.blockchain.toolsImage }}
@@ -104,12 +101,8 @@ spec:
         echo \"Done copying\" &&
         touch /shared/bootstrapped &&
         rm -f /shared/status_configtxgen_complete &&
-        mkdir -p /home/composer/.composer &&
-        chown 1000 /home/composer/.composer &&
         echo 'Done with bootstrapping'
     volumeMounts:
     - mountPath: /shared
       name: {{ template "ibm-blockchain-shared-pvc.name" . }}
-    - mountPath: /home
-      name: composer-credentials
 

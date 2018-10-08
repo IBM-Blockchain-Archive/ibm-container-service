@@ -16,13 +16,13 @@ if [ -z ${PEER_MSPID} ]; then
 fi
 PEER_MSPID=${PEER_MSPID:-Org1MSP}
 
-# Default to "composerchannel" if not defined
+# Default to "mychannel" if not defined
 if [ -z "${CHANNEL_NAME}" ]; then
-	echo "CHANNEL_NAME not defined. I will use \"composerchannel\"."
+	echo "CHANNEL_NAME not defined. I will use \"mychannel\"."
 	echo "I will wait 5 seconds before continuing."
 	sleep 5
 fi
-CHANNEL_NAME=${CHANNEL_NAME:-composerchannel}
+CHANNEL_NAME=${CHANNEL_NAME:-mychannel}
 
 echo "Deleting old channel pods if exists"
 echo "Running: ${KUBECONFIG_FOLDER}/../scripts/delete/delete_channel-pods.sh"

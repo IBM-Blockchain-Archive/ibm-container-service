@@ -16,14 +16,6 @@ echo "=> DELETE_ALL: Deleting create and join channel pods"
 ./delete/delete_channel-pods.sh
 
 echo ""
-echo "=> DELETE_ALL: Deleting composer playground"
-./delete/delete_composer-playground.sh $@
-
-echo ""
-echo "=> DELETE_ALL: Deleting composer rest server"
-./delete/delete_composer-rest-server.sh $@
-
-echo ""
 echo "=> DELETE_ALL: Deleting install chaincode pod"
 ./delete/delete_chaincode-install.sh
 

@@ -12,9 +12,6 @@ spec:
   - name: dockersocket
     hostPath:
       path: /var/run/docker.sock
-  - name: composer-card-store
-    persistentVolumeClaim:
-      claimName: composer-pvc
   containers:
   - name: cryptogen
     image: ibmblockchain/fabric-tools:1.1.0
@@ -48,12 +45,10 @@ spec:
   - name: bootstrap
     image: ibmblockchain/fabric-tools:1.1.0
     imagePullPolicy: Always
-    command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done && cp -r /sampleconfig/cas /shared && touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && mkdir -p /home/composer/.composer && chown 1000 /home/composer/.composer && echo 'Done with bootstrapping'" ]
+    command: ["sh", "-c", "sleep 1 && while [ ! -f /shared/status_configtxgen_complete ]; do echo Waiting for configtxgen; sleep 1; done && cp -r /sampleconfig/cas /shared && touch /shared/bootstrapped && rm /shared/status_configtxgen_complete && echo 'Done with bootstrapping'" ]
     volumeMounts:
     - mountPath: /shared
       name: shared
-    - mountPath: /home/composer/.composer
-      name: composer-card-store
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
